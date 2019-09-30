@@ -1,0 +1,597 @@
+#
+# Common
+#
+common.gender.man: Homme
+common.gender.male: Masculin
+common.gender.woman: Femme
+common.gender.female: Féminin
+common.gender.other: Autre
+common.civility.mr: Monsieur
+common.civility.mrs: Madame
+common.email_address: Adresse email
+common.zip_code: Code postal
+common.country: Pays
+common.show_more: Voir plus
+common.show_less: Voir moins
+common.sector: Secteur
+common.role: Rôle
+common.begin_at: Date de début
+common.finish_at: Date de fin
+common.ordinal_number_feminine: '1ère|%count%ème'
+common.ordinal_number_masculine: '1er|%count%ème'
+common.optional: optionnel
+common.committees_count: "%count% comité|%count% comités"
+common.citizen_projects_count: "%count% projet citoyen|%count% projets citoyens"
+common.members_count: "%count% membre|%count% membres"
+common.i.am: Je suis
+common.all: Tous
+common.jecoute_manager: Accès J'écoute
+
+pending: En attente
+approved: Approuvé
+group: un groupe
+person: un membre
+global.yes: Oui
+global.no: Non
+Choices: Choix possibles
+Survey List: Liste des questionnaires locaux
+number_of_days: '%days% jour|%days% jours'
+
+First name: Prénom
+Last name: Nom
+Theme: Théme
+Gender: Genre
+
+#
+# Adherent
+#
+Invalid credentials.: L'adresse e-mail et le mot de passe que vous avez saisis ne correspondent pas.
+Max attempts reached.: Vous avez effectué 5 tentatives de connexion erronées. Veuillez attendre 1 minute avant de réessayer.
+adherent.error.must_be_validated: Pour vous connecter vous devez confirmer votre adhésion. Si vous n'avez pas reçu le mail de validation, vous pouvez <a href="url">cliquer ici</a> pour le recevoir à nouveau.
+adherent.activity_position.form_label: Profession
+adherent.activity_position.student: Étudiant
+adherent.activity_position.retired: Retraité
+adherent.activity_position.employed: En activité
+adherent.activity_position.unemployed: En recherche d'emploi
+
+referent: référent
+coreferent: co-référent
+deputy: député
+committee_supervisor: animateur
+supervisor: animateur
+committee_host: co-animateur
+host: co-animateur
+board_member: membre du conseil
+coordinator: coordinateur
+procuration_manager: responsable procuration
+assessor_manager: responsable assesseur
+jecoute_manager: Responsable J'écoute
+assessors_manager: Responsable assesseurs
+user: utilisateur
+citizen_project_holder: porteur de projet
+municipal_chief: Candidat Municipales 2020 🇫
+print_privilege: Accès LMI
+
+adherent.registration.success: |
+    Vous venez de rejoindre En Marche, nous vous en remercions !
+    Pour finaliser votre inscription et accéder à votre espace adhérent, vous devez
+    cliquer sur le lien que nous vous avons envoyé par e-mail.
+
+adherent.activation.success: Votre compte adhérent est maintenant actif.
+adherent.activation.already_active: Votre compte est déjà actif.
+adherent.activation.expired_key: Votre clé d'activation est expirée ! Veuillez contacter les administrateurs du site pour activer votre compte.
+
+adherent.submit_donation_label: Je soutiens maintenant
+adherent.pass_donation_label: Pas maintenant
+adherent.stop_donation: '{1} Mettre fin à mon don mensuel|[2,Inf[ Mettre fin à mes dons mensuel'
+
+adherent.reset_password.email_sent: Un e-mail vous a été envoyé contenant un lien pour réinitialiser votre mot de passe.
+adherent.reset_password.success: Votre mot de passe a été réinitialisé.
+adherent.reset_password.expired_key: Votre demande de réinitialisation de mot de passe est expirée ! Veuillez faire une nouvelle demande.
+
+adherent.update_profile.success: Vos informations ont été mises à jour avec succès.
+adherent.update_interests.success: Vos centres d'intérêts ont bien été mis à jour.
+adherent.update_password.success: Vôtre mot de passe a bien été mis à jour.
+adherent.set_emails_notifications.success: Vos préférences d'e-mails ont bien été mises à jour.
+
+adherent.change_email.email_sent: Nous avons envoyé un e-mail à {{ email }} pour vérifier votre adresse e-mail. Cliquez sur le lien qui y est présent pour valider le changement.
+adherent.change_email.success: Votre demande de changement a bien été prise en compte. Vous pouvez désormais vous connecter avec votre nouvelle adresse e-mail.
+adherent.change_email.expired_key: Votre demande de changement d'email est expirée ! Veuillez faire une nouvelle demande.
+
+adherent.contact.success: Votre message a bien été envoyé.
+
+adherent.mandate.admin.label: Mandat(s)
+adherent.mandate.label: Votre ou vos mandats
+adherent.mandate.regional_councilor: Conseiller régional
+adherent.mandate.departmental_councilor: Conseiller départemental
+adherent.mandate.mayor: Maire
+adherent.mandate.city_councilor: Conseiller municipal
+adherent.mandate.parliamentary: Parlementaire
+adherent.mandate.european_deputy: Député européen
+adherent.mandate.consular_conselor: Conseiller consulaire
+adherent.form.elected: Je suis élu(e)
+adherent.form.mandate.placeholder: Choisissez un ou plusieurs mandats
+
+#
+# Dashboard
+#
+dashboard.welcome: Bienvenue, %firstname% !
+dashboard.adherent_since: adhérent depuis %date%
+dashboard.members_stats: |
+    {0} <span class="newblue">Aucun adhérent</span> dans ce département|
+    {1} <span class="newblue">%nb_members% adhérent</span> dans ce département|
+    ]1,Inf[ <span class="newblue">%nb_members% adhérents</span> dans ce département
+dashboard.subscriber_stats: |
+    {0}, aucun accepte de recevoir des e-mails.|
+    {1}, %nb_subscribers% accepte de recevoir des e-mails.|
+    ]1,Inf[, %nb_subscribers% acceptent de recevoir des e-mails.
+dashboard.send_email: Envoyer un e-mail
+dashboard.create_event: Créer un événement
+dashboard.show_members: Voir tous les adhérents
+dashboard.show_committees: Voir tous les comités
+dashboard.my_emails_sended: Les e-mails que j'ai envoyés
+dashboard.show_emails: Voir tous les emails
+dashboard.my_events: Les événements que j'ai créés
+dashboard.show_events: Voir tous les événements
+dashboard.my_internets: Les thématiques qui m'intéressent
+dashboard.shortcut.label: Raccourcis
+dashboard.shortcut.stats_space: Espace statistiques
+dashboard.shortcut.leaflets_posters: 🎨 Tracts et posters
+dashboard.shortcut.my_documents: 📄 Mes documents
+dashboard.shortcut.contact: 🐛 Bug ? Nouveau besoin ? Faites-le nous savoir.
+dashboard.shortcut.procuration_manager_space: 🐼 Espace responsable procuration
+dashboard.shortcut.assessor_manager_space: 🐼 Espace responsable assesseur
+dashboard.shortcut.committee_coordinator_space: 🐸 Espace coordinateur de comité
+dashboard.shortcut.citizen_project_coordinator_space_space: 🐨 Espace coordinateur de projet citoyen
+dashboard.my_skills: Mes compétences
+dashboard.my_committes: Les comités dont je fais partie
+dashboard.my_citizen_projects: Mes projets citoyens
+dashboard.recent_activity: Activité récente
+dashboard.events.participantsCount: |
+    {0} inscrit|
+    {1} inscrit|
+    ]1,Inf[ inscrits
+dashboard.edit: Modifier
+dashboard.emails.recipent: |
+    {0} destinataire|
+    {1} destinataire|
+    ]1,Inf[ destinataires
+dashboard.skills.empty: Aucune compétence pour l'instant, renseignez-en <a href="%url%">ici</a>
+dashboard.citizen_project.empty: Aucun projet citoyen pour l'instant, renseignez-en <a href="%url%">ici</a>
+dashboard.activity.empty: Aucune activitée pour l'instant
+dashboard.interests.empty: Aucun intérèt pour l'instant, renseignez-en <a href="%url%">ici</a>
+dashboard.committies.empty: Aucun comité pour l'instant, ajoutez-en <a href="%url%">ici</a>
+dashboard.picture.update: Modifier ma photo
+
+#
+# Committee
+#
+committee.creation.success: Votre comité a été créé avec succès. Il est en attente de validation par nos équipes.
+
+committee.update.success: Les informations du comité ont été mises à jour avec succès.
+
+committee.message_created: Votre message a bien été envoyé.
+committee.message_edited: Votre message a bien été édité.
+committee.message_deleted: Votre message a bien été supprimé.
+committee.message_published: Votre message a bien été publié.
+
+committee.members_count: '1 adhérent|%count% adhérents'
+committee.active_members_count: '1 adhérent actif|%count% adhérents actifs'
+event.participants_count: '1 inscrit|%count% inscrits'
+event.capacity: '1 inscrit|%count% inscrits'
+capacity: 'inscrit|inscrits'
+
+committee.event.creation.success: Le nouvel événement a bien été créé et publié sur la page du comité.
+committee.event.update.success: L'événement a bien été modifié.
+committee.event.cancel.success: L'événement a bien été annulé.
+
+committee.event.show.share.download_ical: Ajouter l'événement à votre agenda Apple
+committee.event.show.share.cal_google: Ajouter l'événement à votre agenda Google
+
+committee.event.contact.none: Vous n'avez sélectionné aucun inscrit à contacter.
+committee.event.contact.success: Félicitations, votre message a bien été envoyé aux inscrits sélectionnés.
+committee.event.registration.success: Votre inscription à l'événement est confirmée.
+
+committee.contact_members.none: Vous n'avez sélectionné aucun adhérent à contacter.
+committee.contact_members.success: Félicitations, votre message a bien été envoyé aux membres sélectionnés.
+
+committee.promote_host.success: Le membre a été promu animateur du comité avec succès.
+committee.demote_host.success: Le membre a été redéfini simple membre du comité avec succès.
+
+my_committees: Mes comités
+
+#
+# CitizenProject
+#
+citizen_project.creation.success: Votre projet citoyen est en attente de validation par nos équipes, qui vérifient qu'il entre bien en adéquation avec la Charte des Projets Citoyens.
+citizen_project.update.success: Les informations du projet citoyen ont été mises à jour avec succès.
+citizen_project.contact_actors.none: Vous n'avez sélectionné aucun acteur à contacter.
+citizen_project.contact_actors.success: Félicitations, votre message a bien été envoyé aux acteurs sélectionnés.
+citizen_project.actors_count: '%count% acteur|%count% acteurs'
+my_citizen_projects: Mes projets citoyens
+
+#
+# CitizenAction
+#
+citizen_action.creation.success: Votre action citoyenne a bien été créée.
+citizen_action.update.success: Votre action citoyenne a bien été mise à jour.
+citizen_action.participants_count: '%count% inscrit|%count% inscrits'
+citizen_action.registration.success: Votre inscription est confirmée.
+citizen_action.cancel.success: L'action citoyenne a bien été annulée.
+citizen_action.contact.none: Vous n'avez sélectionné aucun inscrit à contacter.
+citizen_action.contact.success: Félicitations, votre message a bien été envoyé aux inscrits sélectionnés.
+citizen_action.export.none: Aucun inscrit à l'initiative citoyenne n'a été trouvé.
+
+#
+# Summary
+#
+summary.handle_experience.success: L'expérience a bien été sauvegardée.
+summary.remove_experience.success: L'expérience a bien été supprimée.
+summary.handle_training.success: La formation a bien été sauvegardée.
+summary.remove_training.success: La formation a bien été supprimée.
+summary.handle_language.success: La langue a bien été sauvegardée.
+summary.remove_language.success: La langue a bien été supprimée.
+summary.step.success: Vos modifications ont bien été enregistrées.
+summary.published.success: Votre profil a bien été publié.
+summary.unpublished.success: Votre profil a bien été dépublié.
+summary.unpublished.error: Votre profil n'est pas public.
+
+member_summary.contract.internship: Stage
+member_summary.contract.permanent: CDI
+member_summary.contract.temporary: CDD
+member_summary.contract.volunteering: Bénévolat
+member_summary.contract.assignment: Mission
+member_summary.contract.other: Autre
+
+member_summary.contribution.volunteer: En tant que bénévole
+member_summary.contribution.contractor: En tant que prestataire
+member_summary.contribution.employee: En tant que salarié
+
+member_summary.job_duration.part_time: Temps partiel
+member_summary.job_duration.full_time: Temps plein
+member_summary.job_duration.punctually: Intervention ponctuelle
+
+member_summary.job_location.on_site: Sur site
+member_summary.job_location.on_remote: À distance
+
+member_summary.language.level.low: Connaissance limitée
+member_summary.language.level.basic: Maîtrise basique
+member_summary.language.level.medium: Bonne maîtrise
+member_summary.language.level.high: Maîtrise parfaite
+member_summary.language.level.fluent: Langue maternelle
+
+summary.remove_photo.success: La photo de profil a bien été supprimée.
+summary.remove_photo.error: La photo de profil n'a pas été supprimée.
+
+#
+# Search
+#
+search.geocoding.exception: Nous ne sommes pas parvenus à reconnaître la ville que vous avez saisie.
+
+#
+# Referent
+#
+referent.message.success: Votre message a été envoyé avec succès. Il pourrait prendre quelques minutes à s'envoyer.
+referent.event.creation.success: Le nouvel événement a bien été créé.
+referent.institutional_event.create.success: Le nouvel événement institutionnel a bien été créé.
+referent.institutional_event.update.success: L'événement institutionnel a bien été mis à jour.
+referent.institutional_event.delete.success: L'événement institutionnel a bien été supprimé.
+referent.label.tags: Référent
+referent.button.accept: J'ai lu et j'accepte
+referent.popup.title: Charte de bonne utilisation des outils numériques
+referent.popup.subtitle: à l’usage des référents
+referent.popup.file_url: https://storage.googleapis.com/en-marche-prod/documents/referents/2-kit-administratif/charte_referents.pdf
+referent.filter.interests: Choisissez des centres d'intérêt
+referent.adherent.subscribed: Abonné(e)
+referent.adherent.unsubscribed: Non-abonné(e)
+referent.status.email: Statut (e-mail)
+referent.managed_area: Zone gérée
+referent.checkbox.co_referent: Donner un accès à l'onglet&nbsp;<i>Adhérents</i>
+referent.checkbox.jecoute_manager: Donner un accès à l'espace&nbsp;<i>J'écoute</i>
+referent.coreferent_access: Accès adhérents
+referent.email.unchangeable: Pour pouvoir modifier l'e-mail, veuillez décocher la case donnant les droits d'accès à la rubrique <i>Adhérents</i> et sauvegarder la modification.
+referent.save: Enregistrer
+
+#
+# J'écoute
+#
+survey.create.success: Le questionnaire a bien été enregistré.
+survey.edit.success: Le questionnaire a bien été mis à jour.
+survey.duplicate.success: Le questionnaire a bien été dupliqué.
+survey.city.required: Vous devez spécifier une ville ou choisir "Département" comme zone concernée.
+
+#
+# Procuration
+#
+procuration_manager.process.success: La demande de procuration a bien été marquée comme "Traitée".
+procuration_manager.unprocess.success: La demande de procuration a bien été marquée comme "En attente".
+procuration_manager.associate.success: La demande de procuration a bien été associée au mandataire.
+procuration_manager.deassociate.success: La demande de procuration a bien été désassociée du mandataire.
+procuration_manager.disabled.success: La proposition du mandataire a bien été désactivée.
+procuration_manager.enabled.success: La proposition du mandataire a bien été réactivée.
+procuration_manager.db_error: Vous avez modifié la base de données exactement au même moment qu'un autre responsable procuration, ce qui a provoqué une erreur. Pourriez-vous réessayer ?
+procuration_request.reasons.profesionnal: Obligations professionnelles
+procuration_request.reasons.handicap: En raison d'un handicap
+procuration_request.reasons.health: Pour raison de santé
+procuration_request.reasons.help: Assistance apportée à une personne
+procuration_request.reasons.training: Obligations de formation
+procuration_request.reasons.holidays: Vacances
+procuration_request.reasons.residency: En raison de mon lieu de résidence
+
+#
+# Newsletter
+#
+newsletter.invitation.form.first_name: Votre prénom
+newsletter.invitation.form.last_name: Votre nom
+newsletter.invitation.form.guest: E-mail d'un ami
+newsletter.invitation.form.invite: J'invite des amis
+newsletter.invitation.form.invite_sent: Votre invitation a bien été envoyée ! | Vos %count% invitations ont bien été envoyées !
+
+#
+# Ton Macron
+#
+ton_macron.invitation_form.male: Homme
+ton_macron.invitation_form.female: Femme
+ton_macron.invitation_form.friend_first_name: Son prénom
+ton_macron.invitation_form.friend_age: Son âge
+ton_macron.invitation_form.friend_position: Sa situation professionnelle
+ton_macron.invitation_form.submit_fill_info: Continuer
+ton_macron.invitation_form.submit_fill_project: Continuer
+ton_macron.invitation_form.submit_fill_interests: Continuer
+ton_macron.invitation_form.submit_fill_reasons: Continuer
+ton_macron.invitation_form.default_subject: Les 10 raisons pour lesquelles je pense que tu devrais voter Macron
+ton_macron.invitation_form.self_first_name: Votre prénom
+ton_macron.invitation_form.self_last_name: Votre nom
+ton_macron.invitation_form.self_email: Votre e-mail
+ton_macron.invitation_form.friend_email: E-mail de votre ami
+ton_macron.invitation_form.submit_send: Envoyer
+
+#
+# Legislatives
+#
+legislatives.contact.success: "Votre demande d'information a été envoyée avec succès. Elle sera traitée dans les plus brefs délais par le service concerné."
+
+#
+# Legislative candidate
+#
+legislative_candidate.careers.1: Vient de la société civile
+legislative_candidate.careers.2: Vient du monde politique
+
+#
+# Event
+#
+event.invitation.form.email: Votre e-mail
+event.invitation.form.first_name: Votre prénom
+event.invitation.form.last_name: Votre nom
+event.invitation.form.message: Votre message (200 caractères max)
+event.invitation.form.guest: E-mail d'un ami
+event.invitation.form.invite: Envoyer
+event.invitation.form.invite_sent: Merci ! Votre invitation a bien été envoyée ! | Merci ! Vos %count% invitations ont bien été envoyées !
+event.next_events_nearby: 'one: Événement à proximité|some: Les événements à proximité'
+event.report: Signaler cet évènement
+event.edit: Modifier l'événement
+event.cancel: Annuler l'événement
+event.manage_participants: Gérer les participants
+event.back_to_list: Retour à la liste des événements
+
+#
+# Board Member
+#
+board_member.area.metropolitan: France métropolitaine
+board_member.area.overseas: France d'Outre-Mer
+board_member.area.abroad: Étranger
+board_member.message.send_to_members: 'one: Envoyer un message à cette personne|some: Envoyer un message à ces %count% personnes'
+board_member.message.success: Votre message a été envoyé avec succès. Il pourrait prendre quelques minutes à s'envoyer.
+board_member.message.filtered_members: 'one: Au membre filtré|some: Aux %count% membres filtrés'
+board_member_count_saved_profils: 'one: %count% profil sauvegardé|some: %count% profils sauvegardés'
+board_member.stats.area.metropolitan: Métropole
+board_member.stats.area.overseas: DOM-TOM
+board_member.stats.area.abroad: Étranger
+board_member.message.recipients: 'one: Un membre du Conseil|some: %count% membres du Conseil'
+
+#
+# Interactive
+#
+interactive.form.male: Homme
+interactive.form.female: Femme
+interactive.form.friend_first_name: Son prénom
+interactive.form.friend_age: Son âge
+interactive.form.friend_gender: Son genre
+interactive.form.friend_position: Sa situation professionnelle
+interactive.form.submit_fill_info: Continuer
+interactive.form.submit_fill_project: Continuer
+interactive.form.submit_fill_cases: Continuer
+interactive.form.submit_fill_appreciations: Continuer
+interactive.form.default_subject: Les 10 raisons pour lesquelles je pense que tu devrais voter Macron
+interactive.form.self_first_name: Nous l'ajouterons dans la signature de votre message
+interactive.form.self_last_name: Nous l'ajouterons dans la signature de votre message
+interactive.form.self_email: Votre e-mail
+interactive.form.friend_email: E-mail de votre ami
+interactive.form.submit_send: Envoyer
+
+#
+# Citizen Project
+#
+citizen_project.administrators_count: "%count% porteur du projet|%count% porteurs du projet"
+citizen_project.committees: Comité en soutien|Comités en soutien
+citizen_project.search.filter_radius_citizen_projects: "{-1} Tous les projets citoyens|[1,Inf[ Dans un rayon de %count% Km"
+citizen_project.edit_project: Modifier ce projet
+citizen_project.create_image: Créer des images de promotion
+citizen_project.waiting_for_approval: |
+    Votre projet citoyen est en attente de validation par les équipes d'En Marche !
+    Vous serez alerté(e) par e-mail quand il sera validé.
+citizen_project.create_citizen_action: Créer une action citoyenne
+citizen_project.about: À propos
+citizen_project.show_more: Voir plus
+citizen_project.our_project: Notre projet
+citizen_project.show_less: Voir moins
+citizen_project.my_kit: Mon kit
+citizen_project.our_field_action: Nos actions terrain
+citizen_project.thread: Fil de discussion
+citizen_project.action_to_launch: Les actions à lancer
+citizen_project.the_problem: Le problème
+citizen_project.denied: |
+    En l'état, votre projet citoyen n'a pas été validé par nos équipes.
+    Vous pouvez à tout moment modifier ce projet ou en proposer un nouveau.
+    Pour plus d'informations, reportez-vous à <a class="link--blue" href="https://storage.googleapis.com/en-marche-prod/documents/projets-citoyens/La%20Charte%20des%20Projets%20Citoyens.pdf">la Charte des Projets Citoyens</a>.
+citizen_project.list.title: Titre
+citizen_project.list.organisator: Organisateur
+citizen_project.list.members: Membres
+citizen_project.list.support_committees: Comités en soutien
+citizen_project.list.place: Lieu
+citizen_project.list.local_problem: Problème local adressé
+citizen_project.list.problem_answer: Réponse au problème
+citizen_project.list.roadmap: Feuille de route
+citizen_project.list.comment: Commentaire
+citizen_project.list.status: Statut
+citizen_project.created_at: Créé le %date% à %time%
+
+#
+# Errors
+#
+recaptcha.error: Une erreur s'est produite, pouvez-vous réessayer ?
+
+#
+# Coordinator
+#
+coordinator.sector.committee: Secteur - Comités
+coordinator.sector.citizen_project: Secteur - Projets citoyens
+coordinator.label.codes: Responsable procurations
+coordinator.label.codes.cp: REC
+coordinator.label.codes.committee: Codes des zones gérées dans le secteur "Comité"
+coordinator.placeholder.sector: Veuillez choisir un secteur
+
+#
+# Timeline
+#
+timeline.measure.status.done: fait
+timeline.measure.status.in_progress: en cours
+timeline.measure.status.upcoming: à venir
+
+#
+# UserDocument
+#
+document.upload.success: Le document a été uploadé avec succès.
+
+#
+# Transactions
+#
+transaction.type.cb: Carte bleue
+transaction.type.check: Chèque
+transaction.type.transfer: Virement
+
+silence_republican.referent_tags.label: Zones concernées par le silence républicain
+silence_republican.help: L'heure du silence se déclare sur l'heure de Paris. Si un silence a lieu à New-York de 12h à 16h, vous devez le déclarer de 18h à 22h car il y a -6h entre les 2 fuseaux horaires.
+Republican Silence List: Liste des Silences Républicains
+
+#
+# Donations
+#
+donation.status.waiting_confirmation: En attente de confirmation
+donation.status.subscription_in_progress: Souscription en cours
+donation.status.refunded: Remboursé
+donation.status.canceled: Souscription annulée/désabonnée
+donation.status.finished: Don terminé avec succes
+donation.status.error: Erreur
+
+#
+# Deputy
+#
+deputy.message.success: Votre message a été envoyé avec succès. Il pourrait prendre quelques minutes à s'envoyer.
+deputy.popup.title: Charte de bonne utilisation des outils numériques
+deputy.popup.subtitle: à l’usage des députés
+deputy.popup.file_url: https://storage.googleapis.com/en-marche-prod/documents/deputes/charte_deputes.pdf
+
+subscription_type.group.communication_mobile: SMS/MMS de communication
+subscription_type.group.communication_emails: E-mails de communication
+subscription_type.group.territories_emails: E-mails Territoires
+subscription_type.group.citizen_project_emails: E-mails Projets Citoyens
+
+#
+# Actualités
+#
+actualites.label.tout: articles
+actualites.label.actualites: actualités
+actualites.label.videos: vidéos
+actualites.label.discours: discours
+actualites.label.medias: médias
+actualites.label.communiques: communiqués
+actualites.label.opinions: opinions
+
+#
+# Payment messages
+#
+payment.message.generic: Votre don n'a pas été effectué, soit car vous l'avez annulé soit car une erreur s'est produite.
+payment.message.connection_failed: La connexion au centre d’autorisation de la banque a échoué ou une erreur interne est survenue. Veuillez patienter quelques instants avant de réessayer.
+payment.message.error_paybox: Une erreur interne est survenue. Veuillez patienter quelques instants avant de réessayer. Si le problème persiste, veuillez nous contacter en cliquant <a href="https://contact.en-marche.fr/" target="_blank">ici</a>.
+payment.message.card_number_invalid: Votre numéro de carte ou cryptogramme visuel semble être erroné. Veuillez patienter quelques instants avant de réessayer.
+payment.message.expiry_date_invalid: La date de fin de validité de votre carte semble être erronée. Veuillez patienter quelques instants avant de réessayer.
+payment.message.payment_already_done: Votre don semble déjà avoir été effectué. Nous vous invitons à vérifier que la transaction a bien été passée auprès de votre banque.
+payment.message.timeout: Il semble que vous aillez dépassé le temps imparti pour faire votre don. Nous vous invitons à réessayer.
+payment.message.blocked_by_fraud_filter: Il semble que vous n'ayez pas obtenu l'autorisation de transaction numérique auprès de votre banque pour faire votre don. Nous vous invitons à réessayer.
+payment.message.do_not_honor: Votre don semble avoir été refusé par votre banque. Nous vous invitons à la contacter pour obtenir plus d'informations.
+payment.message.holder_number_invalid: Votre numéro de carte semble être erroné. Veuillez patienter quelques instants avant de réessayer.
+payment.message.card_issuer_invalid: Votre banque semble ne pas être reconnue par le système. Nous vous invitons à la contacter pour obtenir plus d'informations.
+payment.message.expiry_data_passed: La date de validité de votre carte semble être dépassée. Nous vous invitons à retenter l'opération avec un autre moyen de paiement.
+payment.message.card_absent: Votre carte bancaire semble ne pas être reconnue par le système. Nous vous invitons à contacter votre banque pour obtenir plus d'informations.
+
+# Adherent message
+adherent_message.created_successfully: 'Votre message a bien été créé.'
+adherent_message.updated_successfully: 'Votre message a bien été mis à jour.'
+adherent_message.deleted_successfully: 'Votre message a bien été supprimé.'
+adherent_message.filter_updated: 'Les filtres ont bien été appliqués.'
+adherent_message.campaign_sent_successfully: 'Votre message a bien été envoyé'
+adherent_message.campaign_sent_failure: "Votre message n'a pas été envoyé"
+adherent_message.test_campaign_sent_successfully: 'Votre message test a bien été envoyé.'
+adherent_message.test_campaign_sent_failure: "Votre message test n'a pas été envoyé."
+adherent_message.referent: Message référent
+adherent_message.deputy: Message député
+adherent_message.host: Message co-animateur
+adherent_message.supervisor: Message animateur
+draft: Brouillon
+sent: Envoyé
+
+#
+# Ideas Workshop
+#
+ideas_workshop.author_category.adherent: Adhérent
+ideas_workshop.author_category.committee: Comité
+ideas_workshop.author_category.qg: QG
+ideas_workshop.author_category.elected: Élu
+ideas_workshop.status.draft: Brouillon
+ideas_workshop.status.pending: En cours
+ideas_workshop.status.unpublished: Dépublié
+ideas_workshop.status.finalized: Finalisé
+
+#
+# Assessor
+#
+assessor.processed.choices: "{1} Vous avez une demande d'assesseur traitée.|[2, Inf[ Vous avez %count% demandes d'assesseur traitées."
+assessor.unprocessed.choices: "{1} Vous avez une demande d'assesseur à traiter.|[2, Inf[ Vous avez %count% demandes d'assesseur à traiter."
+assessor.associate.success: L'assesseur a bien été associé au bureau de vote.
+assessor.deassociate.success: L'assesseur a bien été désassocié du bureau de vote.
+assessor.disabled.success: L'assesseur a bien été désactivé.
+assessor.enabled.success: L'assesseur a bien été réactivé.
+
+#
+# Assessor request
+#
+assessor_request.create.success: Votre demande a bien été prise en compte.
+assessor_request.office.holder.label: Titulaire
+assessor_request.office.substitute.label: Suppléant
+
+#
+# Vote Place
+#
+vote_place.unassociated.choices: "{1} Vous avez un bureau de vote à remplir.|[2, Inf[ Vous avez %count% bureaux de vote à remplir."
+vote_place.associated.choices: "{1} Vous avez un bureau de vote complet.|[2, Inf[ Vous avez %count% bureaux de vote complet."
+vote_place.availability:none: 'Aucune'
+
+#
+# Application request
+#
+application_request.tags.edited_successfully: Les tags ont bien été mis à jour
+application_request.taken_successfully: Le candidat a bien été ajouté à votre équipe
+application_request.removed_successfully: Le candidat a été retiré de votre équipe
+application_request.municipal_chief.popup.title: Charte de bonne utilisation des outils numériques
+application_request.municipal_chief.popup.file_url: https://storage.googleapis.com/en-marche-fr/TECH/Charte%20outils%20numeriques%20municipales%202020.pdf

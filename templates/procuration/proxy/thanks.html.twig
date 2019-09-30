@@ -1,0 +1,64 @@
+{% extends 'procuration/_layout.html.twig' %}
+
+{% block page_title 'Merci de votre participation ! - Procuration' %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+        Kernel.onLoad(function() {
+            App.runProcurationThanks();
+        });
+    </script>
+{% endblock %}
+
+{% block procuration_content %}
+    {% block subtitle '' %}
+    <section class="procuration__thanks l__wrapper--slim text--center space--60-0">
+        <h1 class="text--large">
+            Merci de votre participation à Procuration En Marche !
+        </h1>
+        <p class="text--body">
+            Votre formulaire a bien été envoyé.<br />
+            En cas de demande de procuration ayant lieu dans votre commune, votre responsable local vous contactera.
+        </p>
+
+        <div class="space--30-0">
+            <div class="text--medium text--bold b__nudge--bottom">
+                Proposez à vos amis de devenir mandataires !
+            </div>
+            <ul>
+                <li role="button" aria-label="Partagez sur Facebook"
+                    class="btn btn--social btn--facebook"
+                    onclick="App.share('facebook', 'https://en-marche.fr/procuration/je-propose', 'Chaque vote compte. Allez voter au nom d’un citoyen de votre ville.')">
+                    <i class="fa fa-facebook-square"></i> <span>Partagez</span>
+                </li>
+                <li role="button" aria-label="Partagez via Twitter"
+                    class="btn btn--social btn--twitter"
+                    onclick="App.share('twitter', 'https://en-marche.fr/procuration/je-propose', 'Chaque vote compte. Allez voter au nom d’un citoyen de votre ville.')">
+                    <i class="fa fa-twitter"></i> <span>Tweetez</span>
+                </li>
+                <li role="button" aria-label="Partagez via email"
+                    class="btn btn--social btn--email"
+                    onclick="App.share('email', 'https://en-marche.fr/procuration/je-propose', 'Chaque vote compte. Allez voter au nom d’un citoyen de votre ville.')">
+                    <i class="fa fa-envelope-o"></i> <span>Envoyez</span>
+                </li>
+            </ul>
+        </div>
+
+        <p>
+            <a href="{{ path('app_procuration_proxy_proposal', { uuid: uuid }) }}" class="btn">
+                Recommencer
+            </a>
+        </p>
+
+        <p>
+            <a href="{{ path('homepage') }}">
+                Retourner sur en-marche.fr
+            </a>
+        </p>
+
+        <p class="text--summary b__nudge--top-50">
+            En cas de question, n'hésitez pas à nous contacter au <a href="tel:+33186950286">01 86 95 02 86</a>
+            ou à <a href="mailto:procurations@en-marche.fr">procurations@en-marche.fr</a>.
+        </p>
+    </section>
+{% endblock %}

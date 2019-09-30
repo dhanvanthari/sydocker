@@ -1,0 +1,53 @@
+.desintox {
+    margin-bottom: 100px;
+
+    header {
+        background: transparent;
+        margin-top: 60px;
+    }
+
+    &__intro {
+        margin: 50px 0;
+        @include text--medium;
+    }
+
+    &__cases {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-around;
+
+        li {
+            background: white;
+            padding: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-direction: column;
+            list-style-type: none !important;
+            margin-bottom: 30px;
+            width: 25%;
+            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+            transition: all 0.25s;
+            position: relative;
+            top: 0;
+
+            &:hover {
+                top: -2px;
+            }
+
+            .btn {
+                margin-top: 30px;
+                padding: 10px 40px;
+            }
+
+            @media (max-width: $tablet) {
+                width: 38%;
+            }
+
+            @media (max-width: $mobile) {
+                width: 100%;
+            }
+        }
+    }
+}

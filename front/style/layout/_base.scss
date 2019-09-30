@@ -1,0 +1,231 @@
+body {
+    margin: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    // hide overflow on IE11
+    -ms-overflow-x: hidden;
+
+    font-size: 16px;
+    line-height: 24px;
+    font-family: $font-gillsans;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    // Sets the default color in case the visitor has changed them
+    background-color: $defaultBackgroundColor;
+    color : $defaultTextColor;
+}
+
+svg path,
+svg polyline,
+svg polygon {
+    transition: all 0.2s;
+}
+
+@mixin link--no-decor {
+    border: none;
+}
+
+a {
+    text-decoration: none;
+    border-bottom: 1px solid black;
+    color: black;
+    transition: all 0.2s;
+
+    &:hover {
+        @include hover(black);
+
+        path,
+        polygon {
+            @include hover(black);
+
+            &.stroke {
+                @include hover-stroke(black);
+            }
+        }
+
+        polyline {
+            @include hover-stroke(black);
+        }
+    }
+
+    &.link--no-decor {
+        @include link--no-decor;
+    }
+
+    &.link--block {
+        display: block;
+    }
+
+    &.link--blue--dark {
+        color: $blue--dark;
+        border-color: $blue--dark;
+
+        &:hover {
+            @include hover($blue--dark);
+        }
+    }
+
+    &.link--blue {
+        color: $blue;
+        border-color: $blue;
+
+        &:hover {
+            @include hover($blue);
+        }
+    }
+
+    &.link--padding {
+        padding-right: 40px;
+    }
+
+    &.link--newblue { // temporary until we update our color palette
+        color: $blue--dark;
+        border-color: transparent;
+
+        &:hover {
+            border-color: $blue--dark;
+        }
+    }
+
+    &.link--red {
+        color: $red;
+        border-color: transparent;
+
+        &:hover {
+            border-color: $red;
+        }
+    }
+
+    &.link--white {
+        @include link--white;
+    }
+}
+
+h1, h2, h3, h4 {
+    margin: 0;
+    font-weight: 700;
+}
+
+ul, li {
+    padding: 0;
+    margin: 0;
+}
+
+ul {
+    list-style: none;
+}
+
+hr {
+    border: none;
+    height: 1px;
+    margin: 15px 0;
+    color: $gray--light; /* old IE */
+    background-color: $gray--light; /* Modern Browsers */
+}
+
+input[type="text"],
+input[type="submit"],
+input[type="email"] {
+    -webkit-appearance: none;
+}
+
+table {
+    border-collapse: collapse;
+
+    .no-text-transform {
+        th {
+            text-transform: none;
+        }
+    }
+}
+
+.cursor--pointer {
+    cursor: pointer;
+}
+
+.action-menu-oval {
+    position: relative;
+    font-size: 0;
+    padding: 15px 0;
+    cursor: pointer;
+    display: inline-block;
+
+    & > a {
+        border: 0 none;
+
+        & .oval {
+            transition: background-color .6s;
+            display: inline-block;
+            width: 4px;
+            height: 4px;
+            background-color: #ced4dd;
+            border-radius: 50%;
+            margin-right: 3px;
+
+            &:first-child {
+                transition-duration: .3s;
+            }
+
+            &:last-child {
+                transition-duration: .9s;
+            }
+        }
+    }
+
+    .action-dropdown-menu {
+
+        &--bounce {
+            display: none;
+            position: absolute;
+            text-align: left;
+            right: 0;
+            top: 0;
+            z-index: 5;
+            padding-top: 30px;
+        }
+
+        &--content {
+            background-color: $white;
+            box-shadow: 0 2px 4px 0 rgba(99, 98, 150, 0.25);
+            border-radius: 3px;
+            min-width: 150px;
+            padding: 5px 0;
+
+            & a {
+                display: block;
+                padding: 6px 15px;
+                background-color: white;
+                font-size: 14px;
+                border: none;
+
+                &:hover {
+                    color: rgba(0,0,0,0.4);
+                }
+            }
+
+            & a:last-child {
+                border: 0 none;
+            }
+        }
+    }
+
+    &:hover {
+        & .action-dropdown-menu--bounce {
+            z-index: 10;
+            display: block;
+        }
+
+        & > a {
+            .oval {
+                background-color: $neutral-grey;
+            }
+        }
+    }
+}
+
+figure img {
+    width: 100%;
+}

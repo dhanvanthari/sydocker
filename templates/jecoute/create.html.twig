@@ -1,0 +1,157 @@
+{% extends 'jecoute/_layout.html.twig' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('bundles/sonataadmin/vendor/jqueryui/themes/base/minified/jquery-ui.min.css') }}" />
+{% endblock %}
+
+{% block final_javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/jquery.collection.js') }}"></script>
+
+    <script type="text/javascript">
+        Kernel.onLoad(function() {
+            $('.survey-questions-collection').collection({
+                init_with_n_elements: 1,
+                add: '<a href="#" class="question-add btn-secondary btn-secondary--blue">+ Créer une nouvelle question</a>',
+                prefix: 'question',
+                custom_add_location: true,
+                drag_drop: false,
+                position_field_selector: '.questions-position',
+                children: [{
+                    init_with_n_elements: 0,
+                    add: '<a href="#" class="btn-secondary btn-secondary--blue b__nudge--top-10">+ Ajouter un choix</a>',
+                    selector: '.survey-questions-choices-collection',
+                    prefix: 'choice',
+                    add_at_the_end: true,
+                    position_field_selector: '.choices-position',
+                }]
+            });
+
+            const lockQuestion = function (question) {
+                question.find('input').attr('readonly', true);
+                question.find('.choice-management').hide();
+                question.find('a[class$=question_choices-choice-rescue-add]').hide();
+                question.find('.form__radio-button').click(false);
+            };
+
+            $('.question-box.read-only').each(function() {
+                lockQuestion($(this));
+            });
+
+            const displayChoices = function(questionType) {
+                if ('{{ constant('AppBundle\\Jecoute\\SurveyQuestionTypeEnum::SIMPLE_FIELD') }}' === $(questionType).val()) {
+                    $(questionType).parents('.survey-question-type').nextAll('.question-choices').hide();
+                } else {
+                    $(questionType).parents('.survey-question-type').nextAll('.question-choices').show();
+                }
+            };
+
+            $('.survey-question-type input:checked').each(function() {
+                displayChoices($(this));
+            });
+
+
+            $('.jecoute-survey').on('click', '.survey-question-type input', function() {
+                displayChoices($(this));
+            });
+
+            const suggestedQuestionsDialog = $("#suggested_questions_dialog");
+
+            suggestedQuestionsDialog.dialog({
+                modal: true,
+                autoOpen: false,
+                height: "auto",
+                width: "50%",
+                minHeight: 500,
+                resizable: false,
+                draggable: false,
+                position: { my: 'center', at: 'center' },
+                dialogClass: 'ui-dialog__middle',
+                open: function() {
+                    $(this).siblings('.ui-dialog-titlebar')
+                        .find('button').blur()
+                    ;
+                }
+            });
+
+            $("#suggested-questions-open-popin").click(function() {
+                suggestedQuestionsDialog.dialog( "open" );
+            });
+
+            $(".add-current-suggested-question").click(function() {
+                $('.question-add').trigger('click');
+
+                // Sets the content of the current suggested question
+                $("input[name$='[question][content]']").last().val($(this).data('content'));
+
+                // Checks the type of the current suggested question
+                const currentChoiceType = $("input[name$='[question][type]']").last().attr('name');
+                $(`input[name='${currentChoiceType}'][value='${$(this).data('type')}']`).attr('checked', true);
+
+                // Adds the choices of the current suggested question
+                const choices = $(this).data('choices');
+
+                if ($.isArray(choices) && choices.length > 0 ) {
+                    $.each(choices, function(key, choice) {
+                        $('a[class$=question_choices-choice-rescue-add]').last().trigger('click');
+                        $('.survey-question__choice_widget').last().find('input').val(choice);
+                    });
+                }
+
+                // Sets the suggested question flag
+                $("input[name$='[fromSuggestedQuestion]']").last().val('1');
+
+                // Locks the current added suggested question
+                const currentQuestion = $('.question-box').last();
+
+                currentQuestion.addClass('read-only');
+                lockQuestion(currentQuestion);
+
+                suggestedQuestionsDialog.dialog('close');
+            });
+
+            const selectConcernedZoneChoices = function (selectedInput) {
+                const cityField = $("input[name='survey_form[city]']");
+
+                if ('{{ constant('AppBundle\\Form\\Jecoute\\SurveyFormType::CITY_CHOICE') }}'
+                    === $(selectedInput).val())
+                {
+                    cityField.show();
+                } else {
+                    cityField.hide().val('');
+                }
+            };
+
+            $("input[name='survey_form[concernedAreaChoice]']").click(function() {
+                selectConcernedZoneChoices($(this));
+            });
+
+            $("input[name='survey_form[concernedAreaChoice]']:checked").each(function() {
+                selectConcernedZoneChoices($(this));
+            });
+
+        });
+    </script>
+{% endblock %}
+
+{% block jecoute_content %}
+
+    {% form_theme form with ['jquery.collection.html.twig','jecoute/_form_theme.html.twig'] %}
+    <a href="{{ path("app_jecoute_#{space_name}_local_surveys_list") }}" class="back-to-list text--blue--dark link--no-decor b__nudge--bottom block">
+        ⟵ Retour
+    </a>
+
+    <div class="jecoute-survey l__wrapper--slim">
+        <div class="form__title b__nudge--bottom-larger">
+            <h3 class="text--medium">Créer un questionnaire local</h3>
+        </div>
+        {{ form_start(form, { attr: { class: 'em-form b__nudge--top-40' } }) }}
+        {{ include('jecoute/_form.html.twig') }}
+        {{ form_end(form) }}
+    </div>
+
+    {% include ('jecoute/suggested_questions_dialog.html.twig') with {
+        'suggestedQuestions': suggestedQuestions
+    } %}
+
+{% endblock %}

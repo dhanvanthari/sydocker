@@ -1,0 +1,115 @@
+.videos {
+    hr {
+        background: rgba(0, 0, 0, 0.1);
+    }
+
+    &__grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+
+        li {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 60px;
+            width: 48%;
+
+            @media (max-width: $mobile) {
+                width: 100%;
+            }
+
+            .fb-video {
+                background: white;
+                margin-bottom: 10px;
+            }
+
+            ._4-u2 {
+                border-color: transparent;
+                border-width: 5px;
+            }
+        }
+    }
+}
+
+.video__container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 40px;
+
+    video {
+        position: relative;
+        z-index: 100;
+        width: 100%;
+        object-fit: cover;
+
+        &[poster] {
+            max-height: 399px;
+        }
+    }
+}
+
+.video__content {
+    position: absolute;
+    z-index: 200;
+    bottom: 0;
+    left: 0;
+    padding: 30px;
+    max-width: 500px;
+    color: white;
+    pointer-events: none;
+
+    h2 {
+        @include text--larger;
+        font-style: italic;
+    }
+
+    div {
+        pointer-events: all;
+    }
+
+    @media (max-width: $tablet) {
+        max-width: 100%;
+        position: relative;
+        color: black;
+
+        div {
+            @include btn--black;
+        }
+    }
+
+    @media (max-width: $tablet) {
+        padding: 20px 0 0;
+    }
+}
+
+.video__filter {
+    z-index: 150;
+    @include animate-gradient($gradient, 1);
+
+    &:hover {
+        @include animate-gradient($gradient, 0);
+    }
+
+    @media (max-width: $tablet) {
+        background: none;
+    }
+
+    &--hover {
+        z-index: 150;
+        @include animate-gradient($gradient-hover, 0);
+
+        @media (max-width: $tablet) {
+            background: none;
+        }
+
+        &:hover {
+            @include animate-gradient($gradient-hover, 1);
+
+            @media (max-width: $tablet) {
+                background: none;
+            }
+        }
+    }
+}

@@ -1,0 +1,50 @@
+{% extends 'message/_layout.html.twig' %}
+
+{% block message_page_title 'Prévisualiser mon message' %}
+
+{% set message_route_params = route_params|default({})|merge({uuid: message.uuid}) %}
+
+{% block message_content %}
+    {% if app.request.query.has('f') %}
+        {% set back_url = path("app_message_#{message_type}_filter", message_route_params) %}
+    {% else %}
+        {% set back_url = path("app_message_#{message_type}_list", route_params|default({})) %}
+    {% endif %}
+    <a href="{{ back_url }}" class="back-to-list text--blue--dark link--no-decor b__nudge--bottom block">
+        ⟵ Retour
+    </a>
+
+    <div class="form__title b__nudge--bottom-larger">
+        <h3 class="text--medium  text--center">Prévisualiser mon message</h3>
+        <div class="form__step">
+            <span class="active">2</span>
+            / 2
+        </div>
+    </div>
+
+    <iframe width="100%" class="address__postal-code--loading" frameborder="0" height="700px" style="background-position: top;"
+            src="{{ path("app_message_common_content", {uuid: message.uuid}) }}"
+    ></iframe>
+    <div class="l__wrapper--slim b__nudge--top-40 text--center">
+        {% if not message.isSent %}
+            <div class="space--60-0">
+                {% if message.recipientCount is not null %}
+                    <div>
+                        {% if message.recipientCount == 0 %}
+                            <p class="text--medium-small">Votre filtre ne correspond à aucun contact !</p>
+                        {% else %}
+                            <p class="text--medium-small">Vous allez envoyer un message à <span class="text--bold text--blue--dark">{{ message.recipientCount }}</span> contact{{ message.recipientCount > 1 ? 's' : '' }} !</p>
+                        {% endif %}
+                    </div>
+                {% endif %}
+                <a class="btn btn--large-and-full b__nudge--top {{ not message.recipientCount ? 'btn--disabled' : 'btn--blue' }}"
+                   href="{{ message.recipientCount ? path("app_message_#{message_type}_send", message_route_params) : 'javascript:void(0);' }}"
+                >Envoyer</a>
+                <a class="btn btn--ghosting--blue btn--large-and-full b__nudge--top-15" href="{{ path("app_message_#{message_type}_update", message_route_params) }}">Editer le message</a>
+                {% if not message.readOnlyFilter %}
+                    <a class="btn btn--ghosting--blue btn--large-and-full b__nudge--top-15" href="{{ path("app_message_#{message_type}_filter", message_route_params) }}">Modifier les filtres</a>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

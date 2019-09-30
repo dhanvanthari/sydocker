@@ -1,0 +1,87 @@
+.cc-window {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    border-top: 1px solid $lines-grey;
+
+
+    &__text {
+        font-size: 14px;
+        color: $dark;
+        margin: 0 0 15px 0;
+
+        span, a {
+            font-family: $font-roboto;
+        }
+    }
+
+    &__button {
+        a.cc-btn.cc-dismiss {
+            width: 100%;
+            min-width: auto;
+            font-weight: normal;
+            border-width: 1px;
+
+        }
+    }
+
+    @media (min-width: $mobile) {
+        flex-direction: row;
+        height: 70px;
+
+        &__text {
+            margin: 0 15px 0 0;
+        }
+
+        &__button {
+            a.cc-btn {
+                width: auto;
+            }
+        }
+    }
+}
+
+.gm-style-iw a {
+    display: flex;
+    flex-direction: column;
+    border: 0;
+    max-width: 200px;
+    margin-top: 7px;
+    font-weight: 400;
+    font-size: 14px;
+
+    img {
+        width: 100%;
+    }
+
+    > div {
+        height: 140px;
+        background-size: cover;
+        overflow: hidden;
+        margin-bottom: 10px;
+        background-position: center;
+    }
+}
+
+.ui-autocomplete {
+    background: white;
+    margin-left: 5px;
+    border: 1px solid $gray;
+    box-sizing: border-box;
+
+    li a {
+        cursor: pointer;
+        border: 0;
+        padding: 5px 10px;
+        display: inline-block;
+        width: 100%;
+        box-sizing: border-box;
+
+        &:hover {
+            background: $gray--lighter;
+        }
+    }
+}

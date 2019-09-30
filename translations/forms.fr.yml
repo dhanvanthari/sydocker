@@ -1,0 +1,54 @@
+#
+# Event
+#
+SCHEDULED: Programmé
+CANCELLED: Annulé
+
+#
+# Interactives => Ton Macron => Choix
+#
+ton_macron.not_visible: Étape 0 - choix hors étapes du tunnel Ton Macron
+ton_macron.friend_professional_position: Étape 1 - Dîtes en plus votre ami(e)
+ton_macron.friend_project: Étape 2 - Quel est son projet pour les 5 prochaines années ?
+ton_macron.friend_interests: Étape 3 - Sélectionnez 2 sujets qui intéressent votre ami(e)
+ton_macron.self_reasons: Étape 4 - Éxpliquez à votre ce qui plaît chez Emmanuel Macron
+
+#
+# Interactives => My Europe => Choix
+#
+my_europe.not_visible: Étape 0 - Morceaux qui apparaitront pour tout le monde
+my_europe.friend_cases: Étape 1 - Votre proche vous dit que ... (2 choix maximum)
+my_europe.friend_appreciations: Étape 2 - La(es)quelle(s) de ces valeurs importe(nt) le plus à votre proche ? (2 choix maximum)
+
+#
+# Unregistrations choices
+#
+unregistration_reasons.emails: Je reçois trop d'e-mails
+unregistration_reasons.tools: Je ne trouve plus d’utilité dans les outils développés par En Marche
+unregistration_reasons.support: J'avais uniquement adhéré pour soutenir la candidature d'Emmanuel Macron
+unregistration_reasons.government: Je ne suis plus d'accord avec le gouvernement
+unregistration_reasons.elected: Je suis déçu(e) par mon/les élu(e)s LaREM
+unregistration_reasons.movement: Je ne me reconnais plus dans les actions du mouvement En Marche !
+unregistration_reasons.committee: Je suis en désaccord avec l’activité de mon comité local
+unregistration_reasons.other: Autre
+
+#
+# ChezVous
+#
+chez_vous.marker.type.maison_service_accueil_public: Nouvelle maison de service et d'accueil au public
+chez_vous.marker.type.dedoublement_classes: Dédoublement de classe
+chez_vous.marker.type.mission_bern: Mission Bern
+
+chez_vous.measure.type.dedoublement_classes: Dédoublement de classes
+chez_vous.measure.type.suppression_taxe_habitation: Suppression de la taxe d’habitation
+chez_vous.measure.type.couverture_fibre: Couverture en fibre de tout le territoire
+chez_vous.measure.type.maison_service_accueil_public: Généralisation des maisons de service et d'accueil du public
+chez_vous.measure.type.creation_entreprises: Créations nettes d’entreprises dans la commune
+chez_vous.measure.type.baisse_nombre_chomeurs: Baisse du nombre de chômeurs
+chez_vous.measure.type.pass_culture: Mise en Place du Pass Culture
+chez_vous.measure.type.emplois_francs: Emplois francs
+chez_vous.measure.type.quartier_reconquete_republicaine: Création d'un quartier de reconquête républicaine
+chez_vous.measure.type.cheque_energie: Chèque énergie
+chez_vous.measure.type.prime_conversion_automobile: Prime à la conversion automobile
+chez_vous.measure.type.conversion_surface_agricole_bio: Conversion de la surface agricole en Bio
+chez_vous.measure.type.mission_bern: Mission Bern

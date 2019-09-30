@@ -1,0 +1,9 @@
+{% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
+
+{% block field %}
+    {% if object is mooc_video %}
+        <span class="label label-danger">Youtube</span><br/>
+    {% elseif object is mooc_quiz %}
+        <span class="label label-success">Quiz</span><br/>
+    {% endif %}
+{% endblock %}

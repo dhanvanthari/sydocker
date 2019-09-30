@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block page_title 'Espace député' %}
+{% block canonical_url url('app_deputy_users_message') %}
+
+{% block stylesheets %}
+    {% if not app.user.isChartAccepted %}
+        <link rel="stylesheet" href="{{ asset('bundles/sonataadmin/vendor/jqueryui/themes/base/minified/jquery-ui.min.css') }}" />
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <main>
+        <section class="manager-space deputy procuration-manager b__nudge--bottom-huge">
+            <header class="manager-header">
+                <div class="l__wrapper">
+                    <div class="first-section">
+                        <div class="manager-information">
+                            <p>Vous gérez : <span>{{ app.user.managedDistrict }}</span></p>
+                        </div>
+                    </div>
+                    <div class="second-section">
+                        <h1 class="page-title text--large b__nudge--bottom">
+                            {{ block('page_title') }}
+                        </h1>
+                    </div>
+                    <nav class="manager-header__menu">
+                        <ul>
+                            <li class="{{ is_active_route(app.request, 'app_message_deputy_*') ? 'active' }}">
+                                <a href="{{ path("app_message_deputy_list", route_params|default({})) }}">Mes messages</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </header>
+
+            <div class="l__wrapper procuration-manager__content text--body">
+                {% block deputy_content %}{% endblock %}
+            </div>
+        </section>
+
+        {% if not app.user.isChartAccepted %}
+            {% include 'chart_dialog.html.twig' with {
+                'title': 'deputy.popup.title'|trans,
+                'subtitle': 'deputy.popup.subtitle'|trans,
+                'fileUrl': 'deputy.popup.file_url'|trans
+            } %}
+        {% endif %}
+    </main>
+{% endblock %}
+
+{% block final_javascripts %}
+    {% if not app.user.isChartAccepted %}
+        {% if js is not defined %}
+            {% import 'javascript.js.twig' as js %}
+        {% endif %}
+
+        <script type="text/javascript" src={{ asset('bundles/sonataadmin/vendor/jquery/dist/jquery.min.js') }}></script>
+        <script type="text/javascript" src={{ asset('bundles/sonataadmin/vendor/jqueryui/ui/jquery-ui.js') }}></script>
+        <script type="text/javascript">
+            Kernel.onLoad(function() {
+                {{ js.chart_acceptation('#chart_dialog') }}
+            } );
+        </script>
+    {% endif %}
+{% endblock %}

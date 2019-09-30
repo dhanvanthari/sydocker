@@ -1,0 +1,226 @@
+.referent {
+
+    h2 {
+        font-family: $font-roboto;
+    }
+
+    &__filters {
+        margin-bottom: 50px;
+
+        &__title {
+            margin: 0;
+            padding: 15px 15px 0 15px;
+            font-size: 24px;
+        }
+
+        &__subtitle {
+            margin: 20px 0 10px 0;
+            font-family: $font-roboto;
+            font-weight: bold;
+        }
+
+        .form__row {
+            margin-bottom: 0;
+        }
+
+        &__count {
+            text-align: center;
+            margin: 10px 0 50px 0;
+        }
+
+        &__buttons {
+            text-align: center;
+
+            a, button {
+                vertical-align: top;
+                margin: 0 5px;
+            }
+        }
+
+        &__search {
+            &__col {
+                flex: 1;
+                margin: 0 100px 0 0;
+
+                .l__row {
+                    margin: 0 0 20px 0;
+                }
+
+                &__area-code {
+                    margin: 0 0 10px 0 !important;
+                }
+
+                .label__header__interest {
+                    margin-top: 20px;
+                }
+
+                &__interest {
+                    padding: 10px;
+                    margin-bottom: 40px;
+                }
+
+                .form__checkbox {
+                    width: 50%;
+
+                    label:before {
+                        background: $white;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.message_referent__filter__search__col {
+    @extend .referent;
+
+    .form__checkbox label:before {
+        background: $gray--light;
+    }
+}
+
+.jecoute-survey {
+
+    counter-reset: section;
+
+    .question-box {
+        border-top: solid 1px $lines-grey;
+        padding-top: 50px;
+        margin-top: 50px;
+    }
+
+    .question-choices {
+        margin-bottom: 50px;
+
+        .em-form__row {
+            margin-bottom: 10px;
+        }
+    }
+
+    .survey-question {
+        &__widget {
+            overflow: hidden;
+
+            .question-header {
+                overflow: hidden;
+                margin-top: 15px;
+
+                &__label {
+                    float: left;
+
+                    label::after {
+                        counter-increment: section;
+                        content: " " counter(section);
+                    }
+                }
+
+                &__management {
+                    float: right;
+                }
+            }
+        }
+    }
+}
+
+.ui-dialog {
+    &__middle {
+        height: auto !important;
+
+        .add-current-suggested-question {
+            text-decoration: underline;
+
+            &:hover {
+                text-decoration: none;
+            }
+        }
+    }
+}
+
+.read-only {
+    input {
+        opacity: 0.7;
+        background: $gray--light;
+        color: $black--half;
+        border-color: $gray;
+        cursor: not-allowed;
+    }
+}
+
+.message {
+    &-legend {
+        margin: 20px 0 20px 0;
+    }
+}
+
+.jecoute-survey-stats {
+    counter-reset: section;
+
+    .form__label {
+        margin-bottom: 0;
+
+        &:before {
+            counter-increment: section;
+            content: counter(section) ". " ;
+        }
+    }
+
+    .total-answered {
+        font-size: 14px;
+    }
+
+    .block-stats {
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+
+        .stats-percent {
+            width: 95px;
+            font-weight: bold;
+        }
+
+        .stats-bar {
+            position: relative;
+            display: block;
+            height: 35px;
+            width: 100%;
+            background: $blue--chart;
+            transition: 0.4s linear;
+            transition-property: width, background-color;
+            color: $white;
+
+            &__title {
+                position: absolute;
+                top: 0;
+                left: 0;
+
+                span {
+                    display: block;
+                    padding: 0 20px;
+                    height: 35px;
+                    line-height: 35px;
+                    font-size: 13px;
+                }
+
+            }
+
+            &__progress-bar {
+                height: 35px;
+                line-height: 35px;
+                width: 0;
+                background: $blue--soft;
+            }
+
+            &__answered {
+                position: absolute;
+                right: 10px;
+                top: 0;
+                height: 35px;
+                line-height: 35px;
+                font-size: 11px;
+            }
+        }
+    }
+}

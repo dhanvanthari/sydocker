@@ -1,0 +1,59 @@
+{% extends 'referent/_layout.html.twig' %}
+
+{% block referent_content %}
+    <a href="{{ path('app_referent_organizational_chart') }}" class="back-to-list text--blue--dark link--no-decor b__nudge--bottom">
+         ⟵ Retour
+    </a>
+    <div class="l__wrapper--slim">
+        <h3>
+            Edition de {{ person_organizational_chart_item.label }}
+        </h3>
+
+        {{ form_start(form, { attr: { class: 'b__nudge--top-40' } }) }}
+
+        {{ form_errors(form) }}
+
+        {{ form_row(form.firstName) }}
+
+        {{ form_row(form.lastName) }}
+
+        {{ form_row(form.email, { attr: { placeholder: "Indiquez ici son adresse mail d'adhérent" } }) }}
+
+        {% if form.email.vars.disabled %}
+            <div class="text--small text--gray b__nudge--bottom">
+                {{ 'referent.email.unchangeable'|trans|raw }}
+            </div>
+        {% endif %}
+
+        {{ form_row(form.phone) }}
+
+        {{ form_row(form.postalAddress) }}
+
+        <div class="form__checkbox">
+            {{ form_widget(form.isCoReferent) }}
+            <label class="form form__label" for="{{ form.isCoReferent.vars.id }}">
+                {{ 'referent.checkbox.co_referent'|trans|raw }}
+            </label>
+        </div>
+
+        <div class="form__checkbox">
+            {{ form_widget(form.isJecouteManager) }}
+            <label class="form form__label" for="{{ form.isJecouteManager.vars.id }}">
+                {{ 'referent.checkbox.jecoute_manager'|trans|raw }}
+            </label>
+        </div>
+
+        <div class="form__row text--center b__nudge--top-50">
+            <p>
+                <button type="submit" class="btn btn--blue btn--large-and-full">Sauvegarder</button>
+            </p>
+            {% if form.vars.data.id %}
+                <p>
+                    <button type="submit" name="delete" class="btn btn--large-and-full">Supprimer</button>
+                </p>
+            {% endif %}
+        </div>
+
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

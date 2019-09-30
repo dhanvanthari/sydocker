@@ -1,0 +1,220 @@
+{% extends 'committee/_layout.html.twig' %}
+
+{% block page_title %}{{ committee.name }} - {{ committee.cityName }}{% endblock %}
+{% block canonical_url url('app_committee_show', {'slug': committee.slug}) %}
+
+{% block json_ld %}
+    <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "Organization",
+        "name": "{{ committee.name }}",
+        "url": "{{ block('open_graph_url') }}",
+        "image": {
+            "@type": "ImageObject",
+            "url": "{{ block('open_graph_image')|raw }}",
+            "contentUrl": "{{ block('open_graph_image')|raw }}",
+            "width": {{ block('open_graph_image_width') }},
+            "height": {{ block('open_graph_image_height') }}
+        },
+        "description": "{{ committee.description }}",
+        "funder": {
+            "@type": "Person",
+            "givenName": "Emmanuel",
+            "familyName": "Macron"
+        },
+        "parentOrganization": {
+            "@type": "Organization",
+            "name": "En Marche !",
+            "url": "{{ homepage_url }}"
+        },
+        "location": {
+            "@type": "PostalAddress",
+            "streetAddress": "{{ committee.address }}",
+            "addressLocality": "{{ committee.cityName }}",
+            "postalCode": "{{ committee.postalCode }}",
+            "addressCountry": "{{ committee.country }}"
+        }
+    }
+    </script>
+{% endblock %}
+
+{% block javascripts %}
+    {% import 'javascript.js.twig' as js %}
+
+    <script type="text/javascript">
+        Kernel.onLoad(function(di) {
+            var committeeSlug = '{{ committee.slug }}';
+
+            {% if committee_timeline is defined and committee_timeline|length %}
+            var page = 1;
+            var limit = {{ committee_timeline_max_messages }};
+            var moreButton = dom('#committee-timeline-more');
+
+            moreButton && on(moreButton, 'click', function() {
+                page++;
+                di.get('api').getCommitteeTimelineFeed(
+                    committeeSlug,
+                    ((page - 1) * limit),
+                    function (response) {
+                        if (response instanceof XMLHttpRequest) {
+                            hide(moreButton);
+                            return;
+                        }
+
+                        var newPage = document.createElement('div');
+                        newPage.id = 'committee-timeline-page-'+page;
+                        newPage.innerHTML = response;
+
+                        insertAfter(dom('#committee-timeline-page-'+(page-1)), newPage);
+                    }
+                );
+            });
+            {% endif %}
+
+            {% if has_role_adherent %}
+            var toggleMembershipButton = dom('#committee-toggle-membership');
+            var toggleMembershipLoader = dom('#committee-follow-btn-loader');
+
+            toggleMembershipButton && on(toggleMembershipButton, 'click', function () {
+                toggleMembershipLoader.style.display = 'inline';
+                toggleMembershipButton.disabled = true;
+
+                di.get('api').toggleCommitteeMembership(
+                    committeeSlug,
+                    toggleMembershipButton.getAttribute('data-action'),
+                    toggleMembershipButton.getAttribute('data-csrf-token'),
+                    function (result) {
+                        window.location.reload();
+                    }
+                );
+            });
+            {% endif %}
+        });
+    </script>
+{% endblock %}
+
+{% block committee_lcol %}
+    {% if committee.isApproved %}
+        {% if not has_role_user %}
+            <div class="committee-follow--anonymous">
+                <button role="button"
+                        class="btn btn--no-border btn--text-blue committee-follow--disabled btn--no-wrap"
+                        style="max-width: 175px;"
+                        disabled="disabled">
+                    Suivre ce comité
+                </button>
+
+                <div class="committee-follow--anonymous__link text--white b__nudge--top-10">
+                    <a href="{{ login_path_for_anonymous_follower() }}" id="committee-login-link" class="link--white">Connectez-vous</a>
+                    ou
+                    <a href="{{ register_path_for_anonymous_follower() }}" id="committee-register-link" class="link--white">
+                        adhérez
+                    </a>
+                    pour suivre ce comité
+                </div>
+            </div>
+        {% elseif not has_role_adherent %}
+            <div class="committee-follow--anonymous">
+                <button role="button"
+                        class="btn btn--no-border btn--text-blue committee-follow--disabled btn--no-wrap"
+                        style="max-width: 175px;"
+                        disabled="disabled">
+                    Suivre ce comité
+                </button>
+
+                <div class="committee-follow--anonymous__link text--white b__nudge--top-10">
+                    <a href="{{ path('app_membership_join') }}" id="committee-register-link" class="link--white">Vous devez adhérer au mouvement</a>
+                    pour suivre ce comité
+                </div>
+            </div>
+        {% elseif can_follow(committee) %}
+            <button role="button"
+                    class="btn btn--no-border btn--text-blue committee-follow btn--no-wrap"
+                    id="committee-toggle-membership"
+                    data-action="rejoindre"
+                    data-csrf-token="{{ csrf_token('committee.follow') }}">
+                <img src="{{ asset('images/loader-sm.gif') }}" id="committee-follow-btn-loader" />
+                Suivre ce comité
+            </button>
+        {% elseif can_unfollow(committee) %}
+            <button role="button"
+                    class="btn btn--no-border btn--text-blue committee-unfollow btn--no-wrap"
+                    id="committee-toggle-membership"
+                    data-action="quitter"
+                    data-csrf-token="{{ csrf_token('committee.unfollow') }}">
+                <img src="{{ asset('images/loader-sm.gif') }}" id="committee-follow-btn-loader" />
+                Quitter ce comité
+            </button>
+        {% elseif is_host %}
+            <div class="committee-follow--anonymous">
+                <button role="button"
+                        class="btn btn--no-border btn--text-blue committee-unfollow btn--no-wrap"
+                        id="committee-toggle-membership"
+                        disabled="disabled">
+                    Quitter ce comité
+                </button>
+                <div class="committee-follow--anonymous__link text--white b__nudge--top-10">
+                    En tant qu'animateur, vous ne pouvez pas cesser de suivre votre comité.
+                </div>
+            </div>
+        {% endif %}
+
+        <ul class="committee__event__header__cta__social list__links list__links--row list__links--svgs list__links--svgs--small text--white">
+            <li class="head">Partagez</li>
+            <li role="button" aria-label="Partagez sur Facebook"
+                onclick="App.share('facebook', window.location.href, 'Rejoignez le comité : {{ committee.name }}')">
+                <i class="fa fa-facebook-square"></i>
+            </li>
+            <li role="button" aria-label="Partagez via Twitter"
+                onclick="App.share('twitter', window.location.href, 'Rejoignez le comité : {{ committee.name }}')">
+                <i class="fa fa-twitter"></i>
+            </li>
+            <li role="button" aria-label="Partagez via email"
+                onclick="App.share('email', window.location.href, 'Rejoignez le comité : {{ committee.name }}')">
+                <i class="fa fa-envelope-o"></i>
+            </li>
+        </ul>
+    {% endif %}
+{% endblock %}
+
+{% block committee_content %}
+    <nav>
+        {% if is_host %}
+            {{ include('committee/_host_header.html.twig') }}
+        {% endif %}
+    </nav>
+
+    {% if not committee.isApproved %}
+        <section>
+            <div class="committee__waiting-for-approval">
+                Votre comité est en attente de validation par les équipes d'En Marche !
+                Vous serez alerté(e) par e-mail quand il sera validé.
+                <p>
+                    Une fois validé, vous pourrez contacter les adhérents suivant votre comité.
+                </p>
+            </div>
+        </section>
+    {% else %}
+        <section class="committee__timeline" id="committee-timeline">
+            <h2 class=" space--20-0 b__nudge--top-40">
+                Messages des animateurs
+            </h2>
+
+            {% if committee_timeline|length %}
+                <div id="committee-timeline-page-1">
+                    {{ include('committee/timeline/_feed.html.twig') }}
+                </div>
+                <div class="text--center space--30-0">
+                    <button role="button" class="btn" id="committee-timeline-more">Afficher plus</button>
+                </div>
+            {% else %}
+                <div class="text--center">
+                    <p class="text--body">
+                        Aucune activité n'a été recensée au sein de ce comité.
+                    </p>
+                </div>
+            {% endif %}
+        </section>
+    {% endif %}
+{% endblock %}

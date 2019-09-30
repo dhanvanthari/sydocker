@@ -1,0 +1,100 @@
+{% extends 'committee_manager/_space_layout.html.twig' %}
+
+{% block page_title 'Membres de mon comité' %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+        Kernel.onLoad(function() {
+            App.runManageParticipants();
+
+            App.runManageUserSegment('.user-segment-manager-wrapper', 'input[name="members[]"]');
+        });
+    </script>
+{% endblock %}
+
+{% block committee_content %}
+    {% set is_supervisor = is_supervisor(committee) %}
+
+    <section>
+        <div class="datagrid__pre-table b__nudge--bottom">
+            <h3>Adhérents</h3>
+        </div>
+
+        <div class="committee__members__nav">
+            <div>
+                <div class="user-segment-manager-wrapper"></div>
+
+                <form method="post" action="{{ path('app_committee_manager_export_members', {slug: committee.slug}) }}" class="b__nudge--bottom b__nudge--left-small">
+                    <input type="hidden" name="token" value="{{ csrf_token('committee.export_members') }}" id="members-export-token" />
+                    <input type="hidden" name="exports" value="" id="members-export-selection" />
+                    <button id="members-export-button" disabled="disabled" class="btn-secondary btn-secondary--blue">Exporter</button>
+                </form>
+            </div>
+        </div>
+
+        <table class="datagrid__table-manager" cellpadding="10">
+            <thead>
+                <tr>
+                    <th width="50px"><input type="checkbox" id="members-check-all" /></th>
+                    <th width="150px">Prénom</th>
+                    <th width="150px">Nom</th>
+                    <th width="75px">Âge</th>
+                    <th width="100px">CP</th>
+                    <th width="150px">Ville</th>
+                    <th width="150px">Statut</th>
+                    <th width="100px">Rôle</th>
+                    <th width="100px">Adhérent depuis le</th>
+                    <th width="100px">A rejoint le comité le</th>
+                    {% if is_supervisor %}
+                        <th style="min-width: 200px;">Actions</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {{ include('committee_manager/_member_rows.html.twig') }}
+            </tbody>
+        </table>
+
+        {% if members.count / constant('AppBundle\\Controller\\EnMarche\\CommitteeManagerController::MAX_MEMBER_PER_PAGE') > 1 %}
+            <div class="text--center">
+                <div class="spin-loader" style="display: none;"></div>
+                <a href="javascript:void(0);" class="text--blue--dark link--no-decor" id="read-more-button">Voir plus</a>
+            </div>
+        {% endif %}
+    </section>
+{% endblock %}
+
+{% block final_javascripts %}
+    {{ parent() }}
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            const readMoreButton = $('#read-more-button');
+
+            if (!readMoreButton.length) {
+                return;
+            }
+
+            let currentPage = 1;
+            const table = dom('.datagrid__table-manager');
+
+            readMoreButton.on('click', function () {
+                readMoreButton.hide();
+                readMoreButton.prev().show();
+
+                $.ajax({
+                    'url': '{{ path('app_committee_manager_members_segment', {slug: committee.slug, page: 1}) }}'.replace('/1', '/'+ (++currentPage))
+                }).then(function (html) {
+                    readMoreButton.prev().hide();
+
+                    if (html) {
+                        readMoreButton.show();
+
+                        $('tbody', table).append(html);
+                        table.dispatchEvent(new Event('table_update'));
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}

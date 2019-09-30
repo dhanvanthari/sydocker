@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block page_title 'Votre invitation a bien été envoyée' %}
+{% block canonical_url url('invitation_form') %}
+
+{% block content %}
+
+    <main class="invitation-result">
+        <h2>Votre invitation a bien été envoyée</h2>
+
+        <p>
+            Votre invitation à {{ invite.firstName }} {{ invite.lastName }} de rejoindre En Marche a bien été envoyée.
+            Merci !
+        </p>
+
+        <p>
+            <a href="{{ path('homepage') }}" class="btn btn--blue">Retourner à l'accueil</a>
+        </p>
+    </main>
+
+{% endblock %}

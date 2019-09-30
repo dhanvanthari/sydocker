@@ -1,0 +1,298 @@
+{% extends 'base.html.twig' %}
+
+{% form_theme procuration_form 'procuration/_election_rounds_form.html.twig' %}
+
+{% block page_title 'Je me propose - Procuration' %}
+{% block meta_description "Chaque vote compte. Allez voter au nom d'un citoyen de votre ville." %}
+{% block canonical_url url('app_procuration_proxy_proposal') %}
+
+{% block open_graph_image (homepage_url ~ static_asset('procuration-sharer_2.jpg', { q: 70 }))|raw %}
+
+{% block banner '' %}
+{% block header '' %}
+{% block footer '' %}
+
+{% block javascripts %}
+    {% import 'javascript.js.twig' as js %}
+
+    {% if google_maps_api_key %}
+        <script src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}&amp;libraries=places" async defer></script>
+    {% endif %}
+    <script src={{ asset('bundles/sonataadmin/vendor/jquery/dist/jquery.min.js') }}></script>
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+    <script type="text/javascript">
+        Kernel.onLoad(function() {
+            App.runProcurationProxy(
+                '#{{ procuration_form.country.vars.id }}',
+                '#{{ procuration_form.postalCode.vars.id }}',
+                '#{{ procuration_form.state.vars.id }}'
+            );
+
+            App.createVoteLocationSelector(
+                '{{ procuration_form.voteCountry.vars.id }}',
+                '{{ procuration_form.votePostalCode.vars.id }}',
+                '{{ procuration_form.voteCity.vars.id }}',
+                '{{ procuration_form.voteCityName.vars.id }}',
+                '{{ procuration_form.voteOffice.vars.id }}'
+            );
+
+            updateProxiesCount();
+
+            $('#{{ procuration_form.voteCountry.vars.id }}').change(function() {
+                updateProxiesCount();
+            });
+
+            function updateProxiesCount() {
+                var proxiesCountSelected = '#{{ procuration_form.proxiesCount.vars.id }}';
+                var radioButtons = $(proxiesCountSelected+' > div');
+                var radioButtonsHelper = $(proxiesCountSelected+'_helper');
+
+                if ('FR' === $('#{{ procuration_form.voteCountry.vars.id }}').val()) {
+                    $(proxiesCountSelected+'_'+1).prop('checked', true);
+                    radioButtons.last().addClass("hidden");
+                    radioButtonsHelper.text('{{ 'procuration.vote_country.conditions.fr'|trans({}, 'validators')|e('js') }}')
+                } else {
+                    $(proxiesCountSelected+'_'+2).prop('checked', true);
+                    radioButtons.last().removeClass("hidden");
+                    radioButtonsHelper.text('{{ 'procuration.vote_country.conditions.other'|trans({}, 'validators')|e('js') }}');
+                }
+            }
+        });
+    </script>
+{% endblock %}
+
+{% block content %}
+    <main class="procuration">
+        <section class="procuration__header--outer l__row l__row--h-stretch list__links--nav progressive-background text--center text--white"
+                 data-sd="{{ static_asset('procuration.jpg', { w: 300, q: 20 }) }}"
+                 data-hd="{{ static_asset('procuration.jpg', { w: 2000, q: 70 }) }}">
+            <div class="l__wrapper l__row space--30-0">
+                <a href="{{ path('homepage') }}" class="text--logo link--no-decor text--white">EM!</a>
+            </div>
+            <div class="procuration__header--inner l__wrapper--slim">
+                <h1 class="text--larger">
+                    Chaque vote compte.
+                </h1>
+                <h1 class="text--large b__nudge--top-10 l__hide--on-mobile">
+                    Allez voter au nom d'un citoyen de votre ville.
+                </h1>
+            </div>
+        </section>
+
+        {% include 'procuration/_faq.html.twig' %}
+
+        <section class="procuration__content l__wrapper l__row l__row--top l__row--h-stretch-around l__tablet--col space--60-0">
+            <div class="procuration__banner__form procuration__banner__form--large">
+                <form method="post" name="app_procuration_proposal">
+                    {{ form_errors(procuration_form) }}
+
+                    <div>
+                        <h4>Mes informations</h4>
+
+                        <p>Sauf mention contraire, toutes les informations demandées sont obligatoires.</p>
+
+                        <div class="l__row l__row--h-stretch b__nudge--bottom-tiny form__radio-button">
+                            {{ form_widget(procuration_form.gender, { attr: { class: 'register__form__gender' } }) }}
+                            {{ form_errors(procuration_form.gender) }}
+                        </div>
+
+                        <div class="l__row l__row--top l__row--h-stretch l__mobile--col">
+                            <div class="register__form--mid">
+                                {{ form_widget(procuration_form.firstNames, { attr: { placeholder: 'Prénom(s)' } }) }}
+                                {{ form_errors(procuration_form.firstNames) }}
+                            </div>
+                            <div class="register__form--mid">
+                                {{ form_widget(procuration_form.lastName, { attr: { placeholder: 'Nom de naissance' } }) }}
+                                {{ form_errors(procuration_form.lastName) }}
+                            </div>
+                        </div>
+
+                        <div class="form__row">
+                            <div class="address-autocomplete"></div>
+                            <p class="text--smallest text--muted text--left visually-hidden" id="address-autocomplete-help-message">
+                                Nous n'avons pas reconnu votre adresse, veuillez cliquer <a href="#">ici</a> pour pouvoir la renseigner librement.
+                            </p>
+                        </div>
+
+                        <div class="address-block">
+                            <div class="l__row l__row--h-stretch register__form--full">
+                                {{ form_widget(procuration_form.address, { attr: { placeholder: 'Mon adresse de résidence' } }) }}
+                                {{ form_errors(procuration_form.address) }}
+                            </div>
+
+                            <div class="l__row l__row--top l__row--h-stretch l__mobile--col">
+                                <div class="register__form__country register__form--third">
+                                    {{ form_widget(procuration_form.country) }}
+                                    {{ form_errors(procuration_form.country) }}
+                                </div>
+
+                                <div class="register__form__zip_code register__form--third">
+                                    {{ form_widget(procuration_form.postalCode, { attr: { placeholder: 'Code postal' } }) }}
+                                    {{ form_errors(procuration_form.postalCode) }}
+                                </div>
+
+                                <div class="register__form__city register__form--third">
+                                    {{ form_widget(procuration_form.city, { attr: { class: 'register__form__city'} }) }}
+                                    {{ form_widget(procuration_form.cityName, { attr: { class: 'register__form__city_name', placeholder: 'Ville' } }) }}
+                                    {{ form_errors(procuration_form.city) }}
+                                </div>
+                            </div>
+
+                            <div class="l__row l__row--top l__row--h-stretch l__mobile--col">
+                                <div class="register__form--mid">
+                                    {{ form_widget(procuration_form.state, { attr: { placeholder: 'État/Province'} }) }}
+                                    {{ form_errors(procuration_form.state) }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="l__row l__row--h-stretch register__form--full">
+                            {{ form_widget(procuration_form.emailAddress, { attr: { placeholder: 'Adresse e-mail' } }) }}
+                            {{ form_errors(procuration_form.emailAddress) }}
+                        </div>
+
+                        <div class="l__col l__col--top">
+                            {{ form_label(procuration_form.birthdate, 'Date de naissance', { label_attr: { class: 'text--gray' } }) }}
+                            <div class="l__row l__row--h-stretch">
+                                {% for field in procuration_form.birthdate|reverse %}
+                                    {{ form_widget(field, { attr: { style: 'width: 32%;' } }) }}
+                                {% endfor %}
+                            </div>
+                            {{ form_errors(procuration_form.birthdate) }}
+                        </div>
+
+                        <div class="l__col l__col--top register__form__phone">
+                            {{ form_label(procuration_form.phone, 'Téléphone', { label_attr: { class: 'text--gray' } }) }}
+                            <div class="l__row l__row--top l__row--h-stretch">
+                                {{ form_widget(procuration_form.phone.country, { attr: { class: 'membership_request__form__phone' } }) }}
+                                {{ form_widget(procuration_form.phone.number, { attr: { placeholder: 'Téléphone' } }) }}
+                            </div>
+                            {{ form_errors(procuration_form.phone) }}
+                        </div>
+                    </div>
+
+                    <div class="b__nudge--top-40">
+                        <h4>Mon lieu de vote</h4>
+
+                        <div class="form__row">
+                            {{ form_label(procuration_form.voteCountry, 'Le pays où je suis inscrit sur les listes électorales') }}
+                            {{ form_widget(procuration_form.voteCountry, { attr: { class: 'form--full' } }) }}
+                        </div>
+
+                        <div id="vote-row-postal-code" class="form__row">
+                            {{ form_label(procuration_form.votePostalCode, 'Le code postal où je vote') }}
+                            {{ form_widget(procuration_form.votePostalCode, { attr: { class: 'form--full', placeholder: 'Code postal' } }) }}
+                        </div>
+
+                        <div class="form__row">
+                            <span id="vote-label-city-name">
+                                {{ form_label(procuration_form.voteCity, 'La ville dans laquelle je vote') }}
+                            </span>
+                            <span id="vote-label-consulate" style="display: none;">
+                                {{ form_label(procuration_form.voteCity, 'La circonscription consulaire dans laquelle je suis inscrit(e)') }}
+                            </span>
+                            {{ form_widget(procuration_form.voteCity) }}
+                            {{ form_widget(procuration_form.voteCityName, { attr: { class: 'form--full', placeholder: 'Ville' } }) }}
+                        </div>
+
+                        <div class="form__row">
+                            {{ form_label(procuration_form.voteOffice, 'Nom ou localisation de votre bureau de vote') }}
+                            {{ form_errors(procuration_form.voteOffice) }}
+                            {{ form_widget(procuration_form.voteOffice, { attr: { class: 'form--full', placeholder: 'Bureau de vote' } }) }}
+                        </div>
+
+                        <div class="form__row" id="proxiesCount">
+                            {{ form_label(procuration_form.proxiesCount, 'Nombre de procurations proposées') }}
+                            {{ form_errors(procuration_form.proxiesCount) }}
+                        </div>
+
+                        <div class="form__row">
+                            <div class="l__row--h-stretch b__nudge--bottom-medium form__radio-button">
+                                {{ form_widget(procuration_form.proxiesCount, { attr: { class: 'b__nudge--bottom-small' } }) }}
+                            </div>
+
+                            <div id="app_procuration_proposal_proxiesCount_helper"></div>
+                        </div>
+                    </div>
+
+                    <div class="b__nudge--top-40">
+                        <h4>Mes disponibilités</h4>
+
+                        <h5 class="procuration__title-elections">
+                            Je peux recevoir une procuration pour...
+                            <span class="text--small text--gray">(cocher les cases correspondantes)</span>
+                        </h5>
+
+                        {{ form_widget(procuration_form.electionRounds) }}
+                        {{ form_errors(procuration_form.electionRounds) }}
+                    </div>
+
+                    <div class="l__col l__col--top register__form__phone">
+                        {{ form_label(procuration_form.inviteSourceName, 'Si vous n\'avez pas été invité(e) en tant qu\'adhérent(e) à En Marche, indiquez quel marcheur vous a invité(e) à devenir mandataire (optionnel)') }}
+                        <div class="l__row l__row--top l__row--h-stretch">
+                            {{ form_widget(procuration_form.inviteSourceFirstName, { attr: { class: 'form--full', placeholder: 'Nom de la personne qui vous a invité' } }) }}
+                            {{ form_widget(procuration_form.inviteSourceName, { attr: { class: 'form--full', placeholder: 'Prénom de la personne qui vous a invité' } }) }}
+                        </div>
+                        {{ form_errors(procuration_form.inviteSourceFirstName) }}
+                        {{ form_errors(procuration_form.inviteSourceName) }}
+                    </div>
+
+                    <div class="b__nudge--top-40">
+                        {{ form_errors(procuration_form.reachable) }}
+                        <div class="form__row form__checkbox form__checkbox--large" id="procuration_reachable">
+                            {{ form_widget(procuration_form.reachable) }}
+                            {{ form_label(procuration_form.reachable, "En cochant cette case, j'accepte d'être recontacté par LaREM pour la prochaine échéance électorale, à savoir les élections municipales de 2020.") }}
+                        </div>
+
+                        {{ form_errors(procuration_form.conditions) }}
+                        <div class="form__row form__checkbox form__checkbox--large" id="procuration_conditions">
+                            {{ form_widget(procuration_form.conditions) }}
+                            {{ form_label(procuration_form.conditions, "En cochant cette case, je m'engage à voter selon les vœux du mandant. *") }}
+                        </div>
+
+                        {{ form_errors(procuration_form.authorization) }}
+                        <div class="form__row form__checkbox form__checkbox--large" id="procuration_authorization">
+                            {{ form_widget(procuration_form.authorization) }}
+                            {{ form_label(procuration_form.authorization, "En cochant cette case, j'accepte que LaREM traite mes données dans le cadre de la plateforme de procuration en ligne. *") }}
+                        </div>
+                    </div>
+
+                    <input type="hidden" class="nojs-g-recaptcha-response" name="g-recaptcha-response" value="" />
+                    {% if recaptcha_public_key is not empty %}
+                        <div class="g-recaptcha" data-sitekey="{{ recaptcha_public_key }}" style="margin: 10px auto 50px auto;"></div>
+                    {% elseif app.debug %}
+                        <input type="hidden" name="g-recaptcha-response" value="fake" />
+                    {% endif %}
+
+                    <p class="b__nudge--top-large text--small text--gray text--justify" id="procuration_legal_notices">
+                        Les informations marquées d'un astérisque sont obligatoires, l'absence de réponse de ces champs
+                        ne permettra pas à LaREM de traiter votre demande. Les données recueillies dans ce formulaire sont
+                        traitées par LaREM dans le cadre de la plateforme de procuration, afin (i) d'identifier des
+                        personnes susceptibles d'être mandataires en vue d'obtenir la procuration d'un tiers dans le cadre
+                        des élections européennes 2019, (ii) d'identifier des personnes susceptibles d'être mandants en vue
+                        d'octroyer une procuration à un tiers dans le cadre des élections européennes 2019, et (iii) de
+                        mettre en relation des mandataires et des mandants afin que les premiers puissent recevoir
+                        la procuration des seconds dans le cadre des élections européennes 2019.<br/><br/>
+
+                        Si vous y consentez, ces informations peuvent également être utilisées par LaREM afin de vous
+                        contacter pour la prochaine échéance électorale, à savoir les élections municipales 2020.<br/><br/>
+
+                        Ces informations sont nécessaires pour vous permettre de devenir mandant et peuvent être
+                        communiquées aux services administratifs habilités par LaREM et chargés de la gestion des
+                        procurations, comme nos responsables procuration, les mairies et bureaux de vote.<br/><br/>
+
+                        Conformément à la règlementation en vigueur, vous disposez d'un droit d'opposition et d'un droit à la limitation du traitement de données vous concernant, ainsi que d'un droit d'accès, de rectification, de portabilité et d'effacement de vos données. Vous disposez également de la faculté de donner des directives sur le sort de vos données après votre décès. Vous pouvez exercer vos droits en nous adressant votre demande accompagnée d'une copie de votre pièce d'identité à l'adresse postale ou électronique suivante : La République En Marche, 63 rue Sainte-Anne, 75002 Paris, France ou <a target="_blank" class="link--no-decor" href="mailto:mes-donnees@en-marche.fr">mes-donnees@en-marche.fr</a>. Pour plus d'information vous pouvez consulter la Politique de protection des données de LaREM <a href="https://en-marche.fr/politique-protection-donnees" target="_blank" rel="noopener noreferrer" class="link--no-decor">https://en-marche.fr/politique-protection-donnees</a>.
+                    </p>
+
+                    <div class="text--center b__nudge--top-large">
+                        <button type="submit" class="btn btn--blue">
+                            Je continue
+                        </button>
+                    </div>
+
+                    {{ form_rest(procuration_form) }}
+                </form>
+            </div>
+        </section>
+    </main>
+{% endblock %}

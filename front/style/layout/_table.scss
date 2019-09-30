@@ -1,0 +1,25 @@
+.table {
+
+    &__default {
+
+        thead tr th {
+            color: $black;
+            font-weight: bold;
+            font-size: 18px;
+            text-align: left;
+        }
+
+        td, th {
+            padding: 10px 5px;
+            word-break: break-word;
+
+            &.c__width-20 {
+                width: 20%;
+            }
+
+            &.c__width-40 {
+                width: 40%;
+            }
+        }
+    }
+}

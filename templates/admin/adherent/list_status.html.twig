@@ -1,0 +1,61 @@
+{% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
+
+{% block field %}
+    {% if object.hasAdvancedPrivileges %}
+        {% if object.isReferent %}
+            <span class="label label-primary" style="padding: 2px;">Référent</span><br/>
+        {% endif %}
+
+        {% if object.isCoReferent %}
+            <span class="label label-primary" style="padding: 2px;">Co-Référent</span><br/>
+        {% endif %}
+
+        {% if object.isCoordinatorCitizenProjectSector %}
+            <span class="label label-primary" style="padding: 2px;">REC</span><br/>
+        {% endif %}
+
+        {% if object.isCoordinatorCommitteeSector %}
+            <span class="label label-primary" style="padding: 2px;">Coordinateur</span><br/>
+        {% endif %}
+
+        {% if object.isProcurationManager %}
+            <span class="label label-primary" style="padding: 2px;">Procuration</span><br/>
+        {% endif %}
+
+        {% if object.isAssessorManager %}
+            <span class="label label-primary" style="padding: 2px;">Assesseur</span><br/>
+        {% endif %}
+
+        {% if object.isJecouteManager %}
+            <span class="label label-primary" style="padding: 2px;">J'écoute</span><br/>
+        {% endif %}
+
+        {% if object.isHostOnly %}
+            <span class="label label-primary" style="background-color: #90ade6 !important; padding: 2px;">Co-Animateur</span><br/>
+        {% endif %}
+
+        {% if object.isSupervisor %}
+            <span class="label label-primary" style="background-color: #90ade6 !important; padding: 2px;">Animateur</span><br/>
+        {% endif %}
+
+        {% if object.isCitizenProjectAdministrator %}
+            <span class="label label-primary" style="background-color: #90ade6 !important; padding: 2px;">Porteur de projet ({{ object.citizenProjectMemberships.countCitizenProjectAdministratorMemberships }})</span><br/>
+        {% endif %}
+
+        {% if object.isBoardMember %}
+            <span class="label label-primary" style="padding: 2px;">Membre du Conseil</span><br/>
+        {% endif %}
+
+        {% if object.isDeputy %}
+            <span class="label label-primary" style="padding: 2px;">Député</span><br/>
+        {% endif %}
+
+        {% if object.isMunicipalChief %}
+            <span class="label label-primary" style="padding: 2px;">Candidat Municipales 2020 🇫🇷</span><br/>
+        {% endif %}
+    {% elseif object.isAdherent %}
+        <span class="label label-primary">Adhérent</span>
+    {% else %}
+        <span class="label label-default">Utilisateur</span>
+    {% endif %}
+{% endblock %}

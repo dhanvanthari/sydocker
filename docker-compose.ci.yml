@@ -1,0 +1,19 @@
+version: "3.2"
+
+services:
+    app:
+        image: ${APP_DOCKER_IMAGE_NAME}:${APP_DOCKER_IMAGE_MD5}
+        environment:
+            - SYMFONY_ENV=test
+            - APP_ENV=test
+        build:
+            cache_from:
+                - ${APP_DOCKER_IMAGE_NAME}:${APP_DOCKER_IMAGE_MD5}
+                - ${APP_DOCKER_IMAGE_NAME}:dev
+
+    db:
+        tmpfs: /var/lib/mysql
+
+    selenium:
+        ports:
+            - 5900:5900

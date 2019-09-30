@@ -1,0 +1,148 @@
+.listing {
+    margin-bottom: 70px;
+
+    nav {
+        text-align: center;
+        border-top: 1px solid rgba(0, 35, 73, 0.15);
+        padding-top: 20px;
+
+        ul li {
+            display: inline;
+            margin-right: 20px;
+
+            &.active {
+                font-weight: 700;
+            }
+
+            &.label {
+                text-transform: uppercase;
+                @include text--small;
+                letter-spacing: 1.5px;
+            }
+
+            a {
+                border: none;
+            }
+        }
+    }
+
+    &__paginator {
+        text-align: center;
+        margin-top: 50px;
+
+        ul li {
+            display: inline-block;
+            height: 40px;
+            min-width: 40px;
+            border: 1px solid black;
+
+            &:hover {
+                border-color: rgba(0, 0, 0, 0.5);
+            }
+
+            a {
+                top: 9px;
+                position: relative;
+                border: none;
+                padding: 11px 15px 10px 15px;
+
+                svg {
+                    top: 2px;
+                    position: relative;
+                }
+            }
+
+            &.active {
+                border: none;
+                font-weight: 700;
+            }
+        }
+    }
+
+    article {
+        ul {
+            padding: 0;
+
+            li {
+                display: flex;
+                align-items: center;
+                list-style: none;
+                border-bottom: 1px solid rgba(0, 0, 0, .15);
+                padding: 15px 0;
+
+                @media (max-width: $mobile) {
+                    // display: block;
+                }
+
+                &:last-child {
+                    border: none;
+                }
+
+                .thumbnail {
+                    margin-right: 3%;
+                    width: 27%;
+                    display: flex;
+                    align-items: inherit;
+
+                    img {
+                        width: 100%;
+                        background-color: $gray;
+                    }
+
+                    @media (max-width: $mobile) {
+                        width: 110px;
+                        height: 75px;
+                        margin-right: 15px;
+                    }
+                }
+
+                h2 {
+                    @include text--medium;
+                    font-family: $font-gillsans;
+                    font-weight: 400;
+                    margin: 0;
+
+                    @media (max-width: $mobile) {
+                        @include text--small;
+                        font-weight: bold;
+                    }
+                }
+
+                div {
+                    @include text--summary;
+                    margin: 5px 0 10px;
+                    width: 70%;
+                }
+
+                a {
+                    border: none;
+                }
+
+                .share {
+                    color: $gray;
+                    font-family: $font-roboto;
+                    font-size: $text--size-smallest;
+                    text-transform: uppercase;
+
+                    @media (max-width: $mobile) {
+                        display: none;
+                    }
+
+                    .fa {
+                        font-size: $text--size-medium--small;
+                        margin-left: 5px;
+                        cursor: pointer;
+
+                        &-facebook-square:hover {
+                            color: $facebook;
+                        }
+
+                        &-twitter:hover {
+                            color: $twitter;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

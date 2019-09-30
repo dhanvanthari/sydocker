@@ -1,0 +1,16 @@
+{% extends 'events/_layout.html.twig' %}
+
+{% block page_title 'Participer à un événement' %}
+
+{% block event_content %}
+    <section class="l__wrapper--500 space--30-0 b__nudge--bottom-huge text--center">
+        <div class="committee-event-registration-confirmation">
+            <p class="text--body b__nudge--bottom">
+                Votre participation est bien enregistrée !
+            </p>
+            <div class="text--center">
+                <a class="btn" href="{{ path("app_#{event.type}_show", {slug: event.slug}) }}">Retour</a>
+            </div>
+        </div>
+    </section>
+{% endblock %}

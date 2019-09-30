@@ -1,0 +1,271 @@
+{% use "form_div_layout.html.twig" %}
+
+{# Override #}
+
+{%- block choice_widget_expanded -%}
+    <div {{ block('widget_container_attributes') }}>
+        {% set start = 0 %}
+        {% for key, choice in choices %}
+            {% if choice.choices is defined %}
+                <h3>{{ key|trans }}</h3>
+                {% set size = choice.choices|length %}
+            {% else %}
+                {% set size = 1 %}
+            {% endif %}
+            {%- for child in form.children|slice(start,size) %}
+                {{- form_row(child, {translation_domain: choice_translation_domain}) -}}
+            {% endfor -%}
+            {% set start = start + size %}
+        {% endfor -%}
+    </div>
+{%- endblock choice_widget_expanded -%}
+
+{%- block form_row -%}
+    {% if form_full %}
+        {%- set attr = attr|merge({class: (attr.class|default('') ~ ' form--full')|trim}) -%}
+    {% endif %}
+    <div{% if form_full %} class="form__row"{% endif %}>
+        {{- form_label(form) -}}
+        {{- form_errors(form) -}}
+        {{- form_widget(form, { attr: attr }) -}}
+    </div>
+{%- endblock form_row -%}
+
+{% block form_widget_simple -%}
+    {% if type is not defined or type not in ['file', 'hidden'] %}
+        {%- set attr = attr|merge({class: (attr.class|default('') ~ ' form form__field')|trim}) -%}
+    {% endif %}
+    {{- parent() -}}
+    {{- block('character_count') -}}
+{%- endblock form_widget_simple %}
+
+{% block textarea_widget -%}
+    {% set attr = attr|merge({class: (attr.class|default('') ~ ' form form__field')|trim}) %}
+    {{- parent() -}}
+    {{- block('character_count') -}}
+{%- endblock textarea_widget %}
+
+{% block button_widget -%}
+    {% if defaultClass is not defined or defaultClass is same as(true) %}
+        {% set attr = attr|merge({class: (attr.class|default('btn') ~ ' form btn')|trim}) %}
+    {% endif %}
+    {{- parent() -}}
+{%- endblock %}
+
+{% block choice_widget_collapsed -%}
+    {% set attr = attr|merge({class: (attr.class|default('') ~ ' form form__field')|trim}) %}
+    {{- parent() -}}
+{%- endblock %}
+
+{%- block month_choice_widget -%}
+    <div {{ block('widget_container_attributes') }}>
+        {{- date_pattern|replace({
+            '{{ year }}':  form_widget(form.year),
+            '{{ month }}': form_widget(form.month),
+            '{{ day }}': '',
+        })|raw -}}
+    </div>
+{%- endblock month_choice_widget -%}
+
+{# Labels #}
+
+{% block form_label -%}
+    {%- set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' form form__label')|trim}) -%}
+    {{- parent() -}}
+{%- endblock form_label %}
+
+{% block accept_personal_data_collect_label %}
+    {{ form_label(form, label|default("J'ai lu et j'accepte les mentions d'information relatives au recueil de mes données personnelles ci-dessous :"), {label_attr: {id: 'field-personal-data-collection'}}) }}
+{% endblock %}
+
+{# Errors #}
+
+{% block form_errors -%}
+    {% if errors|length > 0 -%}
+    <ul id="{{ id }}_errors" class="form form__errors">
+        {%- for error in errors -%}
+            <li class="form__error">
+                {%- if error_raw -%}
+                    {{- error.message|raw -}}
+                {%- else -%}
+                    {{- error.message -}}
+                {%- endif -%}
+            </li>
+        {%- endfor -%}
+    </ul>
+    {%- endif %}
+{%- endblock form_errors %}
+
+{# Custom types #}
+
+{% block _app_adherent_pin_interests_interests_widget %}
+    {# TODO to be integrated #}
+    {{ form_widget(form) }}
+{% endblock %}
+
+{% block _app_membership_choose_committees_around_adherent_committees_row %}
+    <div {{ block('widget_container_attributes') }}>
+        {% for name, choice in form %}
+            {% set committee_data = form.parent.vars.committees_views_data[name] %}
+            <div class="l__row l__row--h-stretch l__row--v-stretch l__mobile--col b__nudge--bottom-large">
+                <div class="choose-committee register__comites__list background--lighter space--20">
+                    <h3 class="text--medium text--normal text--breakword">{{ choice.vars.label }}</h3>
+                    <div class="text--body space--10-0 icon--with-text">
+                        {{ include('components/participants.html.twig') }}
+                        {{ 'committee.members_count'|transchoice(committee_data['members_count']) }}
+                    </div>
+                </div>
+                <div class="register__comites__follow form__checkbox">
+                    {{ form_widget(choice) }}
+                    {{ form_label(choice, 'Je veux suivre ce comité') }}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block _summary_skills_entry_name_row %}
+    {% spaceless %}
+        <div class="summary-skill">
+            {{ block('form_errors') }}
+            <span class="skill-remove">X</span>
+            <span class="skill-value">&nbsp;{% if value is not empty %}{{ value }}{% endif %}</span>
+            {{ block('hidden_widget') }}
+        </div>
+    {% endspaceless %}
+{% endblock %}
+
+{% block _citizen_project_committees_entry_row %}
+    {% spaceless %}
+        <div class="summary-committee">
+            <span class="committee-remove">X</span>
+            <span class="committee-value">&nbsp;{% if value is not empty and value.name is defined %}{{ value['name'] }}{% endif %}</span>
+            <input type="hidden" {{ block('widget_attributes') }} {% if value is not empty and value.uuid is defined %}value="{{ value['uuid'] }}" {% endif %}/>
+        </div>
+    {% endspaceless %}
+{% endblock %}
+
+{% block character_count -%}
+    {% if with_character_count is defined and with_character_count and attr.maxlength is defined %}
+        {% set maxlength = attr.maxlength %}
+        <span id="{{ id }}_counter" class="character-count">0/{{ maxlength }}</span>
+
+        <script type="text/javascript">
+            $(document).ready(function() {
+                const $field = $('#{{ id }}');
+                const $counter = $('#{{ id }}_counter');
+                $counter.html($field.val().length  + '/{{ maxlength }}');
+                $field.keyup(function(event) {
+                    const $text_length = $field.val().length;
+                    $counter.html($text_length  + '/{{ maxlength }}');
+                })
+                .trigger('keyup');
+            });
+        </script>
+    {% endif %}
+{%- endblock character_count %}
+
+{% block color_choice_entry_label %}
+    {%- set label_attr = label_attr|merge({style: "cursor: pointer; background-color: " ~ label ~ "; width: 27px; height: 27px;"}) -%}
+    {%- set label = " " -%}
+    {{- block('form_label') -}}
+{% endblock %}
+
+{% block _citizen_project_media_backgroundImage_label %}
+    {%- set label_attr = label_attr|merge({style: "cursor: pointer;"}) -%}
+    {% if not compound -%}
+        {% set label_attr = label_attr|merge({'for': id}) %}
+    {%- endif -%}
+    {% if required -%}
+        {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
+    {%- endif -%}
+    {% if label is empty -%}
+        {%- if label_format is not empty -%}
+            {% set label = label_format|replace({
+                '%name%': name,
+                '%id%': id,
+            }) %}
+        {%- else -%}
+            {% set label = name|humanize %}
+        {%- endif -%}
+    {%- endif -%}
+    <label{% if label_attr %}{% with { attr: label_attr } %}{{ block('attributes') }}{% endwith %}{% endif %}>
+        {{ translation_domain is same as(false) ? label : label|trans({}, translation_domain) }}
+        <div class="l__row l__row--wrap l__row--center l__row--pack-center image-preview" id="image-thumbnail">
+            <span class="text--blue--dark text--center" style="flex-basis: 100%;">
+              Sélectionner une photo sur votre ordinateur
+            </span>
+            <span class="text--center text--summary text--muted" style="flex-basis: 100%;">Minimum 1 200px de largeur</span>
+        </div>
+    </label>
+{% endblock %}
+
+{%- block checkbox_row -%}
+    <div class="form__checkbox">
+        {{ form_widget(form) }}
+        {{ form_label(form) }}
+        {{ form_errors(form) }}
+    </div>
+{%- endblock -%}
+
+{# Bug Fix for waiting this PR: https://github.com/misd-service-development/phone-number-bundle/pull/175 #}
+{% block misd_tel_widget %}
+    <div {{ block('widget_container_attributes') }}>
+        {{- form_widget(form.country) -}}
+        {{- form_widget(form.number) -}}
+    </div>
+{% endblock %}
+
+{% block attachment_file_widget %}
+    {{ form_widget(form) }}
+    {% if form.path is defined %}
+        <a href="{{ path('mooc_get_file', { slug: form.vars.value.slug, extension: form.vars.value.extension }) }}" target="_blank">Télécharger le fichier</a>
+    {% endif %}
+{% endblock %}
+
+{% block _app_donation_confirmDonationType_row %}
+    {{ form_errors(form.parent.children.confirmSubscriptionAmount) }}
+    {%- for child in form %}
+        <div class="text--left form__radio-button">
+            {{- form_widget(child) -}}
+             <label class="text--normal" for="{{ child.vars.id }}">
+                {% if child.vars.value == constant('AppBundle\\Form\\DonationRequestType::CONFIRM_DONATION_TYPE_UNIQUE') %}
+                    Je fais un don unique de {{ form.parent.children.amount.vars.value|localizedcurrency('EUR')|replace({',00' : ''})  }}
+                {% else %}
+                    Je fais un don mensuel de {{ form_widget(form.parent.children.confirmSubscriptionAmount) }} euros
+                {% endif %}
+            </label>
+        </div>
+    {% endfor -%}
+{% endblock %}
+
+{% block _municipal_chief_filter_gender_widget %}
+    {{ block('choice_tab_widget') }}
+{% endblock %}
+
+{% block _referent_filter_gender_widget %}
+    {{ block('choice_tab_widget') }}
+{% endblock %}
+
+{% block _application_request_list_filter_gender_widget %}
+    {{ block('choice_tab_widget') }}
+{% endblock %}
+
+{% block choice_tab_widget %}
+    <div {{ block('widget_container_attributes') }}>
+        {%- for child in form %}
+            <div class="filter__radio__tab">
+                {{- form_widget(child) -}}
+                {{- form_label(child, null, {translation_domain: choice_translation_domain}) -}}
+            </div>
+        {% endfor -%}
+    </div>
+{% endblock %}
+
+{%- block _referent_zone_filter_referentTag_entry_row -%}
+    <div class="form__radio">
+        {{ form_widget(form) }}
+        {{ form_label(form) }}
+        {{ form_errors(form) }}
+    </div>
+{%- endblock -%}

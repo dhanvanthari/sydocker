@@ -1,0 +1,295 @@
+{% set has_role_adherent = is_granted('ROLE_ADHERENT') %}
+
+<nav class="gtm__navigation__desktop l__wrapper l__row l__row--h-stretch l__hide--on-tablet {{ app.user ? '' : 'space--20-0' }}">
+    <ul class="list__links list__links--row list__links--nav list__links--no-decor">
+        <li>
+            <a href="{{ path('homepage') }}" class="text--logo b__nudge--right-0">EM!</a>
+        </li>
+        <div class="l__row">
+            <div class="nav-dropdown">
+                <p>
+                    Le Mouvement
+                    <img alt="menu" class="nav__chevron" src="{{ asset('/images/icons/chevron-down-light-black.svg') }}">
+                </p>
+                <ul class="nav-dropdown__item">
+                    <li>
+                        <a href="{{ path('page_le_mouvement') }}">Qui sommes-nous ?</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('app_our_organization') }}">Notre organisation</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('our_referents_homepage') }}">Nos référents</a>
+                    </li>
+                    <li>
+                        <a href="https://dpt.en-marche.fr" rel="noopener noreferrer" target="_blank">
+                            Nos sites départementaux
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ path('legislatives_homepage') }}">
+                            Nos députés
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <li>
+            <a href="{{ path('articles_list', { category: 'tout' }) }}">Actualités</a>
+        </li>
+        </br>
+        <div class="l__row">
+            <div class="nav-dropdown nav-dropdown__mrg--0">
+                <p>
+                    <a href="https://en-marche.fr/municipales">
+                        <strong>Municipales 2020</strong>
+                    </a>
+                    <img alt="menu" class="nav__chevron" src="{{ asset('/images/icons/chevron-down-light-black.svg') }}">
+                </p>
+                <ul class="nav-dropdown__item">
+                    <li>
+                        <a href="https://en-marche.fr/articles/communiques/cni-municipales-larem">
+                            La CNI
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://storage.googleapis.com/en-marche-fr/charte_10_engagements.pdf" rel="noopener noreferrer" target="_blank">
+                            Les 10 engagements de l'élu
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://en-marche.fr/articles/actualites/laboratoire-initiatives-locales">
+                            Le laboratoire d’initiatives locales
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://en-marche.fr/municipales/candidats-investis">
+                            Nos candidat(e)s
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://en-marche.fr/articles/actualites/toutes-politiques-engagement-femmes">
+                            Toutes Politiques
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ path('app_application_request_request') }}">
+                            Appel à l’engagement
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="l__row">
+            <div class="nav-dropdown">
+                <p>
+                    S'engager
+                    <img alt="menu" class="nav__chevron" src="{{ asset('/images/icons/chevron-down-light-black.svg') }}">
+                </p>
+                <ul class="nav-dropdown__item">
+                    <li>
+                        <a href="{{ path('app_search_events') }}">Événements</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('app_search_committees') }}">Comités</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('react_app_citizen_projects_home') }}">Projets citoyens</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('react_app_ideas_workshop_home') }}">Atelier des idées</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('page_campus') }}">Formation</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('page_le_mouvement_devenez_benevole') }}">Devenez bénévole</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('donation_index') }}">Faire un don</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <li {% if not algolia_app_id or not algolia_api_key %} style="display: none;" {% endif %}>
+            <a class="je-cherche" href="javascript:void(0)">
+                {{ include('components/search.html.twig') }}
+            </a>
+        </li>
+    </ul>
+    <div class="l__row">
+        <div class="nav-dropdown">
+            {% if is_granted('ROLE_ADMIN_DASHBOARD') %}
+                <div class="space--20-0">
+                    <a href="{{ path('sonata_admin_dashboard') }}" class="nav-dropdown__name link--no--decor">
+                        Admin 🤓
+                    </a>
+                </div>
+            {% else %}
+                {% if app.user %}
+                    <a href="{{ has_role_adherent ? path('app_user_profile') }}" class="icon--with-text nav-dropdown__name">
+                        {{ include('components/user.html.twig') }}
+                        {{ app.user.firstName is defined ? app.user.firstName : ''}}
+                    </a>
+                {% endif %}
+                {% if has_role_user %}
+                    <div class="nav-dropdown__caret">
+                        <span class="nav-dropdown__caret--outer"></span>
+                        <span class="nav-dropdown__caret--inner"></span>
+                    </div>
+                    <div class="nav-dropdown__menu">
+                        <ul class="nav-dropdown__section">
+                            <li class="nav-dropdown__section__name">
+                                <a href="{{ has_role_adherent ? path('app_user_profile') }}" class="icon--with-text">
+                                    <div>{{ app.user }}</div>
+                                    <div class="text--small text--gray text--normal">{{ get_adherent_role_labels(app.user)|join(', ') }}</div>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="nav-dropdown__separator"></div>
+                        <div class="nav-dropdown__row">
+                            <div>
+                                {% if has_role_adherent %}
+                                    <ul class="nav-dropdown__section">
+                                        <li>
+                                            <a href="{{ path('app_summary_manager_index') }}">Profil</a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ path('app_adherent_events') }}">Mes activités</a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ path('app_user_profile_donation') }}">Mes dons</a>
+                                        </li>
+                                        {% if app.user and (has_role_adherent or app.user.isHost) %}
+                                            <li>
+                                                <a href="{{ path('app_documents_index') }}">Mes documents</a>
+                                            </li>
+                                        {% endif %}
+                                        {% if app.user.isHost or app.user.isMunicipalChief %}
+                                            <li class="visually-hidden">
+                                                <a href="{{ path('app_formation_home') }}" class="is-new">Je me forme</a>
+                                            </li>
+                                        {% endif %}
+                                    </ul>
+
+                                    <div class="nav-dropdown__separator"></div>
+                                    {% if has_role_adherent and is_granted('CREATE_COMMITTEE') %}
+                                        <ul class="nav-dropdown__section">
+                                            <li>
+                                                <a href="{{ path('app_adherent_create_committee') }}">Créer un comité</a>
+                                            </li>
+                                        </ul>
+                                        <div class="nav-dropdown__separator"></div>
+                                    {% endif %}
+                                {% endif %}
+                                {% if app.user and not has_role_adherent %}
+                                    <div class="nav-dropdown__separator"></div>
+                                    <ul class="nav-dropdown__section">
+                                        <li>
+                                            <a href="{{ path('app_membership_join') }}">Adhérer</a>
+                                        </li>
+                                    </ul>
+                                {% endif %}
+                                <ul class="nav-dropdown__section">
+                                    <li>
+                                        <a class="text--gray" href="{{ path('app_user_set_email_notifications') }}">Notifications via e-mail et mobile</a>
+                                    </li>
+                                    <li>
+                                        <a class="text--gray" href="{{ path('app_user_profile') }}">Paramètres</a>
+                                    </li>
+                                    <li>
+                                        <a class="text--gray" href="https://aide.en-marche.fr" rel="noopener noreferrer" target="_blank">Aide</a>
+                                    </li>
+                                    <li>
+                                        <a class="text--gray" href="{{ path('logout') }}">Déconnexion</a>
+                                    </li>
+                                    {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
+                                        <li class="text--small">
+                                            <a href="{{ path('app_admin_impersonation_exit') }}">
+                                                Quitter l'impersonnification
+                                            </a>
+                                        </li>
+                                    {% endif %}
+                                </ul>
+                            </div>
+                            {% if has_role_adherent %}
+                                <ul class="nav-dropdown__section">
+                                    <li class="text--small text--bold">Comités</li>
+                                    <li>
+                                        {{ adherent_committees }}
+                                    </li>
+                                </ul>
+                                <ul class="nav-dropdown__section">
+                                    <li class="text--small text--bold">Projets citoyens</li>
+                                    <li>
+                                        {{ adherent_citizen_projects }}
+                                    </li>
+                                </ul>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endif %}
+            {% endif %}
+        </div>
+        {% if not app.user %}
+            <a href="{{ path('app_user_login') }}" class="text--body link--no-decor b__nudge--right">Connexion</a>
+        {% endif %}
+        {% if not has_role_adherent %}
+            <a href="{{ path('app_membership_join') }}" class="text--body b__nudge--right">Adhérer</a>
+        {% endif %}
+        <a href="{{ path('donation_index') }}" class="btn btn--pink">Donner</a>
+    </div>
+</nav>
+{% if is_granted('ROLE_SUPERVISOR') or
+    is_granted('ROLE_HOST') or
+    is_granted('ROLE_CITIZEN_PROJECT_ADMINISTRATOR') or
+    is_granted('ROLE_REFERENT') or
+    is_granted('ROLE_COREFERENT') or
+    is_granted('ROLE_DEPUTY') or
+    is_granted('ROLE_BOARD_MEMBER') or
+    is_granted('ROLE_COORDINATOR') or
+    is_granted('ROLE_PROCURATION_MANAGER') or
+    is_granted('ROLE_LEGISLATIVE_CANDIDATE') or
+    is_granted('ROLE_ASSESSOR_MANAGER') or
+    is_granted('ROLE_MUNICIPAL_CHIEF') or
+    is_granted('ROLE_JECOUTE_MANAGER')
+%}
+    {% set totalSections =
+        (app.user.isSupervisor or app.user.isHost) +
+        (app.user.isReferent or app.user.isCoReferent) +
+        app.user.isDeputy +
+        app.user.isCoordinatorCitizenProjectSector +
+        app.user.isCoordinatorCommitteeSector +
+        app.user.isProcurationManager +
+        app.user.isAssessorManager +
+        app.user.isMunicipalChief +
+        app.user.isJecouteManager +
+        is_granted('ROLE_CITIZEN_PROJECT_ADMINISTRATOR')
+    %}
+
+    <div class="background--darker l__hide--on-tablet">
+        <ul class="l__wrapper space--10-0 list__links list__links--row list__links--row-left list__links--no-decor list__links--subnav nav-dropdown__menu__items">
+            {% if totalSections > 1 %}
+            <li>
+                <div class="nav-dropdown" style="margin: 0;">
+                    <a href="#">Mes espaces</a>
+                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                    <i class="fa fa-caret-up" aria-hidden="true"></i>
+                    <div class="nav-dropdown__menu nav-dropdown__black">
+                        <ul class="list__links">
+                            {{ include('adherent/_list_my_sections.html.twig') }}
+                        </ul>
+                    </div>
+                </div>
+            </li>
+            {% else %}
+                {{ include('adherent/_list_my_sections.html.twig') }}
+            {% endif %}
+            {% if app.user.isHost %}
+                <li>
+                    <a href="{{ path('app_formation_home') }}" class="is-new">Je me forme</a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+{% endif %}

@@ -1,0 +1,102 @@
+{% extends 'events/_layout.html.twig' %}
+
+{% block page_title "Inscription à #{event.name} - #{event.cityName}, #{event.beginAt|date('d/m/Y')}" %}
+{% block canonical_url url('app_event_attend', { slug: event.slug }) %}
+{% block meta_description "S'inscrire à #{event.name} qui est un événement local du mouvement La République En Marche ! organisé par #{event.organizer} le #{event.beginAt|date('d/m/Y')} à #{event.beginAt|date('G\\hi')}, dans la ville de #{event.cityName}." %}
+
+{% block event_name %}
+    <h1 class="committee-event-name text--large b__nudge--bottom">
+        Inscription à {{ event.name }} - {{ event.cityName }}, {{ event.beginAt|date('d/m/Y') }}
+    </h1>
+{% endblock %}
+
+{% block event_content %}
+    <section class="l__wrapper--500 space--30-0 b__nudge--bottom-huge">
+        <div class="committee-event-registration">
+            <h2 class="b__nudge--bottom text--normal">Participer</h2>
+            {% if not has_role_adherent %}
+                <p>
+                    Avez-vous déjà un compte En Marche ?
+                    <a href="{{ login_path_for_anonymous_follower("app_#{event.type}_attend", { slug: event.slug }) }}">
+                        Connectez-vous
+                    </a>.
+                </p>
+            {% endif %}
+
+            <form action="{{ path("app_#{event.type}_attend", { slug: event.slug }) }}" method="post" id="committee-event-registration-form">
+                {{ form_errors(form) }}
+
+                <div class="form__row" id="field-first-name">
+                    {{ form_errors(form.firstName) }}
+                    {{ form_widget(form.firstName, {
+                        'attr': {
+                            'class': 'form--full',
+                            'placeholder': 'Prénom',
+                        }
+                    }) }}
+                </div>
+
+                <div class="form__row" id="field-last-name">
+                    {{ form_errors(form.lastName) }}
+                    {{ form_widget(form.lastName, {
+                        'attr': {
+                            'class': 'form--full',
+                            'placeholder': 'Nom',
+                        }
+                    }) }}
+                </div>
+
+                <div class="form__row" id="field-email-address">
+                    {{ form_errors(form.emailAddress) }}
+                    {{ form_widget(form.emailAddress, {
+                        'attr': {
+                            'class': 'form--full',
+                            'placeholder': 'Adresse e-mail',
+                        }
+                    }) }}
+                </div>
+
+                <div class="form__row form__checkbox" id="field-accept-terms">
+                    {{ form_widget(form.acceptTerms) }}
+                    {{ form_errors(form.acceptTerms) }}
+                    <label for="{{ form.acceptTerms.vars.id }}">
+                        En participant à cet événement, vous acceptez de partager vos nom et prénom à l'organisateur.
+                    </label>
+                </div>
+
+                {% if form.newsletterSubscriber is defined %}
+                    <div class="form__row form__checkbox" id="field-newsletter-subscriber">
+                        {{ form_widget(form.newsletterSubscriber) }}
+                        {{ form_errors(form.newsletterSubscriber) }}
+                        <label for="{{ form.newsletterSubscriber.vars.id }}">
+                            J'accepte de recevoir les e-mails En Marche !
+                        </label>
+                    </div>
+                {% endif %}
+
+                <div class="form__checkbox">
+                    {{ form_row(form.personalDataCollection, { label: "J'ai lu et j'accepte les mentions d'information relatives au recueil de mes données personnelles ci-dessous" }) }}
+                </div>
+
+                <div class="text--center">
+                    {{ form_rest(form) }}
+                    <button type="submit" class="btn btn--blue" id="attend-committee-event">
+                        Je m'inscris
+                    </button>
+                    <a  href="{{ path('app_event_show', {'slug': event.slug}) }}"
+                        class="btn">
+                        Annuler
+                    </a>
+                </div>
+
+                <p class="text--small text--gray">
+                    Les données recueillies sur ce formulaire sont traitées par LaREM afin de gérer les informations relatives aux inscriptions aux évènements de LaREM et de permettre à LaREM de vous envoyer des communications politiques.
+                    Toutes les informations sont obligatoires, sauf celles marquées "Optionnel". L’absence de réponse dans ces champs ne permettra pas à LaREM de traiter votre demande.
+                    Conformément à la règlementation, vous disposez d’un droit d’opposition et d’un droit à la limitation du traitement de données vous concernant, ainsi que d’un droit d’accès, de rectification, de portabilité et d’effacement de vos données. Vous disposez également de la faculté de donner des directives sur le sort de vos données après votre décès.
+                    Vous pouvez consulter notre <a href="https://en-marche.fr/politique-protection-donnees" target="_blank">Politique de protection des données</a> et exercer vos droits en nous adressant votre demande accompagnée d’une copie de votre pièce d’identité à l’adresse postale ou électronique suivante : La République En Marche, 63 rue Sainte-Anne, 75002 Paris, France et <a href="mailto:mes-donnees@en-marche.fr">mes-donnees@en-marche.fr</a>.
+                </p>
+            </form>
+        </div>
+
+    </section>
+{% endblock %}

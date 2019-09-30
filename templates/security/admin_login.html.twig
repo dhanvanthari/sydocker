@@ -1,0 +1,37 @@
+{% extends 'oauth/base.html.twig' %}
+
+{% block page_title 'Administration' %}
+
+{% block content %}
+    <section class="l__inner">
+        <h1>Connectez-vous avec vos identifiants <em>En Marche</em> afin d’accéder à cette application.</h1>
+
+        {{ form_errors(form) }}
+
+        {% if error %}
+            <div id="auth-error" class="form__error">
+                {{- error.messageKey|trans(error.messageData) -}}
+            </div>
+        {% endif %}
+
+        {{ form_start(form, {'action': path('app_admin_login')}) }}
+            <ul class="form">
+                <li>
+                     {{ form_label(form._login_email, 'E-mail', { label_attr: { class: 'visually-hidden' } }) }}
+                     {{ form_errors(form._login_email) }}
+                     {{ form_widget(form._login_email, { attr: { placeholder: 'E-mail' } }) }}
+                </li>
+
+                <li>
+                    {{ form_label(form._login_password, 'Mot de passe', { label_attr: { class: 'visually-hidden' } }) }}
+                    {{ form_errors(form._login_password) }}
+                    {{ form_widget(form._login_password, { attr: { placeholder: 'Mot de passe' } }) }}
+                </li>
+
+                <li>
+                    <button class="btn">Connexion</button>
+                </li>
+            </ul>
+        {{ form_end(form) }}
+    </section>
+{% endblock %}
